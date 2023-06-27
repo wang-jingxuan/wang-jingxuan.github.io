@@ -6,14 +6,24 @@ site_description: Jingxuan Wang
 
 # [Navigtion]
 nav:
-  - About Me:
-    - CV:
-    - Some Interesting Facts:
+  - Home: index.md
+  - CV: CV/README.md
   - Programming:
-    - Machine Learing:
-      - Deep Neuron Network:
-    - Reprint:
-      - Two Sigma Stock Market Prediction:
+    - Programming/README.md
+    - Machine Learning:
+      - Programming/MachineLearning/README.md
+      - Logistic Regression: pytorch_logistic_regerssion.md
+      - DNN: pytorch_DNN.md
+      - CNN: pytorch_convolutional_neural_network(CNN).md
+      - Image Classification: mnist_image_classification_DNN.md
+    - Reprint - Two Sigma Stock Market Prediction:
+      - Programming/Reprint/TwoSigma_StockMarket Prediction_Reprint/README.md
+      - Market EDA: Two Sigma Market EDA.md
+      - News EDA: Two Sigma News EDA.md
+      - Merging and Data preprocessing: Two sigma Merging and Data prepocessing.md
+      - Modeling: Two Sigma Modeling.md
+
+      
 
 # [UI]
 ## [top]
