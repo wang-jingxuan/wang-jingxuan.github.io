@@ -1,6 +1,6 @@
 # [Info]
-site_name: Jingxuan Wang # 左上角标题
-site_url: https://jingxuan-wang.github.io
+site_name: Jingxuan Wang # Title
+site_url: https://jx-wang.github.io/
 site_author: Jingxuan Wang
 site_description: Jingxuan Wang
 
@@ -12,17 +12,17 @@ nav:
     - Programming/README.md
     - Machine Learning:
       - Programming/MachineLearning/README.md
-      - Logistic Regression: pytorch_logistic_regerssion.md
-      - DNN: pytorch_DNN.md
-      - CNN: pytorch_convolutional_neural_network(CNN).md
-      - Image Classification: mnist_image_classification_DNN.md
+      - Logistic Regression: Programming/MachineLearning/pytorch_logistic_regerssion/pytorch_logistic_regerssion.md
+      - DNN: Programming/MachineLearning/pytorch_DNN/pytorch_DNN.md
+      - CNN: Programming/MachineLearning/pytorch_convolutional_neural_network(CNN).md
+      - Image Classification: Programming/MachineLearning/mnist_image_classification_DNN.md
     - Reprint - Two Sigma Stock Market Prediction:
       - Programming/Reprint/TwoSigma_StockMarket Prediction_Reprint/README.md
-      - Market EDA: Two Sigma Market EDA.md
-      - News EDA: Two Sigma News EDA.md
-      - Merging and Data preprocessing: Two sigma Merging and Data prepocessing.md
-      - Modeling: Two Sigma Modeling.md
-
+      - Market EDA: Programming/Reprint/TwoSigma_StockMarket Prediction_Reprint/Two Sigma Market EDA/Two Sigma Market EDA.md
+      - News EDA: Programming/Reprint/TwoSigma_StockMarket Prediction_Reprint/Two Sigma News EDA/Two Sigma News EDA.md
+      - Merging and Data preprocessing: Programming/Reprint/TwoSigma_StockMarket Prediction_Reprint/Two sigma Merging and Data prepocessing.md
+      - Modeling: Programming/Reprint/TwoSigma_StockMarket Prediction_Reprint/Two Sigma Modeling/Two Sigma Modeling.md
+  - About Me: Me/README.md
       
 
 # [UI]
@@ -57,7 +57,7 @@ theme:
 edit_uri: edit/main/docs # 编辑按钮跳转的链接
 ## [top-right corner]
 repo_url: https://github.com/JX69/jingxuan-wang.github.io # 右上角点击跳转的链接
-repo_name: jingxuan-wang.github.io # 右上角的名字
+repo_name: jx-wang.github.io # 右上角的名字
 ## [bottom-left corner]
 copyright: Jingxuan Wang # 左下角的版权声明
 ## [bottom-right corner]
