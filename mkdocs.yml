@@ -1,6 +1,6 @@
 # [Info]
 site_name: Jingxuan Wang # Title
-site_url: https://jx-wang.github.io/
+site_url: https://wang-jingxuan.github.io/
 site_author: Jingxuan Wang
 site_description: Jingxuan Wang
 
@@ -56,8 +56,8 @@ theme:
     repo: fontawesome/brands/github
 edit_uri: edit/main/docs # 编辑按钮跳转的链接
 ## [top-right corner]
-repo_url: https://github.com/JX69/jingxuan-wang.github.io # 右上角点击跳转的链接
-repo_name: jx-wang.github.io # 右上角的名字
+repo_url: https://github.com/wang-jingxuan/wang-jingxuan.github.io # 右上角点击跳转的链接
+repo_name: wang-jingxuan.github.io # 右上角的名字
 ## [bottom-left corner]
 copyright: Jingxuan Wang # 左下角的版权声明
 ## [bottom-right corner]
