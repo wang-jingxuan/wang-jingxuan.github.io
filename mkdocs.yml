@@ -31,17 +31,17 @@ theme:
   name: material
   palette:
     - scheme: default # 日间模式
-      primary: indigo # 上方的
-      accent: orange # 链接等可交互元件的高亮色
+      primary: amber # 上方的
+      accent: cyan # 链接等可交互元件的高亮色
       toggle:
         icon: material/weather-night # 图标
-        name: 切换至夜间模式 # 鼠标悬浮提示
+        name: Switch to dark mode # 鼠标悬浮提示
     - scheme: slate # 夜间模式
-      primary: indigo
-      accent: orange
+      primary: amber
+      accent: cyan
       toggle:
         icon: material/weather-sunny
-        name: 切换至日间模式
+        name: Switch to light mode
   features:
     - navigation.tabs # 使用Tab来进行分类
     - navigation.top # 返回顶部的按钮 在上滑时出现
@@ -51,7 +51,7 @@ theme:
     - search.highlight # 搜索出的文章关键词加入高亮
     - content.code.copy # 可以通过按钮复制代码
     - content.action.edit # 点击按钮跳转到编辑页面  需要结合 edit_uri 一起使用
-  language: zh # 一些提示性的文字会变成中文
+  language: en # 一些提示性的文字会变成中文
   icon:
     repo: fontawesome/brands/github
 edit_uri: edit/main/docs # 编辑按钮跳转的链接
