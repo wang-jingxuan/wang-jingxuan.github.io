@@ -1,7 +1,5 @@
 # CV
 
-[Download PDF](CV_Jingxuan_Wang_20230627.pdf)
+[Download PDF](CV_Jingxuan_Wang.pdf)
 
-Update by 06/27/2023
-
-
+Update by 06/29/2023
