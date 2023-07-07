@@ -16,6 +16,7 @@ nav:
       - DNN: Programming/MachineLearning/pytorch_DNN/pytorch_DNN.md
       - CNN: Programming/MachineLearning/pytorch_convolutional_neural_network(CNN).md
       - Image Classification: Programming/MachineLearning/mnist_image_classification_DNN.md
+      - SVM Algorithm: Programming/MachineLearning/pytorch_SVM_algorithm.md
     - Reprint - Two Sigma Stock Market Prediction:
       - Programming/Reprint/TwoSigma_StockMarket Prediction_Reprint/README.md
       - Market EDA: Programming/Reprint/TwoSigma_StockMarket Prediction_Reprint/Two Sigma Market EDA/Two Sigma Market EDA.md
