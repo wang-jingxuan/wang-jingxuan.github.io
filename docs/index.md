@@ -1,11 +1,11 @@
-# Hi, I'm Jingxuan.
+# Welcome, I'm Jingxuan.
 
-<img title="" src="me.png" alt="" width="242" data-align="inline">
+<img title="" src="me.png" alt="" width="336">
 
-I'm an applicant for the MFE program at Berkeley Haas. My areas of interest include Deep Neural Networks, NLP-based trading strategies, pension fund management, and biotechnology.
+Intrigued by the crossroads of Natural Language Processing (NLP) and trading strategies, pension fund management, and biotechnology, I bring a unique and open-minded perspective to my work.
 
-Prior to attending Berkeley, I completed my undergraduate studies at Tsinghua University School of Economics and Management (THU SEM). For more information, please see my [CV](CV/CV_Jingxuan_Wang.pdf).
+My academic foundation was built at THU and is currently being fortified at HKU. For a comprehensive look at my credentials, please view my [CV](CV/CV_Jingxuan_Wang.pdf).
 
-In my spare time, I am dedicated to volunteering activities and enjoy long-distance cycling. I also have a passion for spicy food.
+Outside the academic sphere, I channel my passion into community volunteering and long-distance cycling, while maintaining an adventurous palate for spicy cuisine. 
 
-You can reach me at [jx-wang19@tsinghua.org.cn](mailto:[jx-wang19@tsinghua.org.cn](mailto:jx-wang19@tsinghua.org.cn)).
+Feel free to connect with me at [jx-wang19@tsinghua.org.cn](mailto:[jx-wang19@tsinghua.org.cn](mailto:jx-wang19@tsinghua.org.cn)).
