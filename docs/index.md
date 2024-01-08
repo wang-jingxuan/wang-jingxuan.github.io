@@ -2,7 +2,7 @@
 
 <img title="" src="me.png" alt="" width="336">
 
-Intrigued by the crossroads of Natural Language Processing (NLP) and trading strategies, pension fund management, and biotechnology, I bring a unique and open-minded perspective to my work.
+Intrigued by the crossroads of finance, data analysis and biotechnology, I bring a unique and open-minded perspective to my work.
 
 My academic foundation was built at THU and is currently being fortified at HKU. For a comprehensive look at my credentials, please view my [CV](CV/CV_Jingxuan_Wang.pdf).
 
