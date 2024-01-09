@@ -1,8 +1,6 @@
-
 # Pytorch DNN Stategy
 
 ## 1. Fire Up
-
 
 ```python
 import torch
@@ -22,25 +20,21 @@ import tushare as ts
 %config InlineBackend. figure_format = "svg" # In order to make the figures clearly shown in the notebook
 ```
 
-
 ```python
 import tensorflow as tf
 from tensorflow import keras
 ```
-
 
 ```python
 df = ts.lpr_ma_data() #取当前年份的数据
 #df = ts.lpr_ma_data(2014) #取2014年的数据
 ```
 
-
 ```python
 df
 ```
 
 ## 2. Data Generating
-
 
 ```python
 data = ts.get_k_data('hs300', start = '2014-07-01', end = '2017-03-20')
@@ -49,19 +43,19 @@ data
 ```
 
     本接口即将停止更新，请尽快使用Pro版接口：https://tushare.pro/document/2
-
-
-
+    
+    
+    
     ---------------------------------------------------------------------------
-
+    
     AttributeError                            Traceback (most recent call last)
-
+    
     /var/folders/j0/k9_1_n411h3ct9_rf7__b9hh0000gn/T/ipykernel_7429/3567945227.py in ?()
     ----> 1 data = ts.get_k_data('hs300', start = '2014-07-01', end = '2017-03-20')
           2 data.set_index("date", inplace = True)
           3 data
-
-
+    
+    
     /opt/anaconda3/lib/python3.9/site-packages/tushare/stock/trading.py in ?(code, start, end, ktype, autype, index, retry_count, pause)
         702     else:
         703         raise TypeError('ktype input error.')
@@ -71,8 +65,8 @@ data
         707                                        symbol, code,
         708                                        index, ktype,
         709                                        retry_count, pause), 
-
-
+    
+    
     /opt/anaconda3/lib/python3.9/site-packages/pandas/core/generic.py in ?(self, name)
        5985             and name not in self._accessors
        5986             and self._info_axis._can_hold_identifiers_and_holds_name(name)
@@ -80,10 +74,8 @@ data
        5988             return self[name]
     -> 5989         return object.__getattribute__(self, name)
     
-
+    
     AttributeError: 'DataFrame' object has no attribute 'append'
-
-
 
 ```python
 data_cleaned = pd.DataFrame()
@@ -117,66 +109,54 @@ data_cleaned["volume4"] = data_cleaned["volume"].shift(4)
 data_cleaned["volume5"] = data_cleaned["volume"].shift(5)
 ```
 
-
     ---------------------------------------------------------------------------
-
+    
     NameError                                 Traceback (most recent call last)
-
+    
     Cell In[5], line 2
           1 data_cleaned = pd.DataFrame()
     ----> 2 data_cleaned["Close0"] = np.log(data["close"])
           3 data_cleaned["H_L"] = data["high"] - data["low"]
           4 data_cleaned["C_0"] = data["close"] - data ["open"]
-
-
+    
+    
     NameError: name 'data' is not defined
 
+```python
 
+```
 
 ```python
 
 ```
 
+```python
+
+```
 
 ```python
 
 ```
 
+```python
+
+```
 
 ```python
 
 ```
 
+```python
+
+```
 
 ```python
 
 ```
 
-
 ```python
 
 ```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
-
-```python
-
-```
-
 
 ```python
 
@@ -189,6 +169,7 @@ data_cleaned["volume5"] = data_cleaned["volume"].shift(5)
 - Cannot represent all the historical data in the model.
   
   Add long data window? Maybe it will work, but we have better instruments.
+
 - RNN: GRU/ LSTM
 
 **Shortcomings of the feature engineering**
@@ -204,6 +185,7 @@ data_cleaned["volume5"] = data_cleaned["volume"].shift(5)
   Many practitioners in China are finding good factors according to a wealth of data available to them.
 
 ***
+
 **Shortcomings of the idea**
 
 - Frequently trading will cause large trading cost
@@ -223,7 +205,6 @@ data_cleaned["volume5"] = data_cleaned["volume"].shift(5)
 - Most code in the financial industry is OOP
 
 - My investment philosophy: fundamental or event-driven(NLP and sentiment analysis)
-
 
 ```python
 

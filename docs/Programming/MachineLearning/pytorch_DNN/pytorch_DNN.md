@@ -1,8 +1,6 @@
-
 # Pytourch Deep Neuron Network
 
 ## 1. Fire up
-
 
 ```python
 import torch
@@ -15,7 +13,6 @@ from sklearn.metrics import accuracy_score
 ```
 
 ## 2. Data generating
-
 
 ```python
 x1_Pos = []
@@ -43,7 +40,6 @@ for i in range(1000):
 
 综合起来，这段代码生成了一个具有两个特征（x1_Pos和x2_Pos）和一个标签（y_Pos）的二分类数据集，其中x1_Pos和x2_Pos的取值与彼此相关，并且存在一定的噪声。
 
-
 ```python
 x1_Neg = []
 x2_Neg = []
@@ -59,7 +55,6 @@ for i in range (1000):
         x2_Neg.append(- np.sqrt (25.0 - temp ** 2) + 0.3 * np.random.randn ())
 ```
 
-
 ```python
 plt.figure(figsize = (8, 6))
 plt.scatter(x1_Pos, x2_Pos, color = "black", label = "Class 1", alpha = 0.5)
@@ -71,19 +66,13 @@ plt.grid()
 plt.show()
 ```
 
-
 ![png](output_7_0.png)
-
-
 
 ```python
 Dict = {"x1": x1_Pos + x1_Neg, "x2": x2_Pos + x2_Neg, "y": y_Pos + y_Neg}
 DataTrain = pd.DataFrame(Dict)
 DataTrain
 ```
-
-
-
 
 <div>
 <style scoped>
@@ -94,11 +83,13 @@ DataTrain
     .dataframe tbody tr th {
         vertical-align: top;
     }
-
+    
     .dataframe thead th {
         text-align: right;
     }
+
 </style>
+
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -180,9 +171,6 @@ DataTrain
 <p>2000 rows × 3 columns</p>
 </div>
 
-
-
-
 ```python
 x1_Pos = []
 x2_Pos = []
@@ -197,7 +185,6 @@ for i in range(250):
     elif i % 2 == 1:
         x2_Pos.append(- np.sqrt(4.0 - temp ** 2) + 0.3 * np.random.randn () )
 ```
-
 
 ```python
 x1_Neg = []
@@ -214,15 +201,11 @@ for i in range (250):
         x2_Neg.append(- np.sqrt (25.0 - temp ** 2) + 0.3 * np.random.randn ())
 ```
 
-
 ```python
 Dict = {"x1": x1_Pos + x1_Neg, "x2": x2_Pos + x2_Neg, "y": y_Pos + y_Neg}
 DataTest = pd.DataFrame(Dict)
 DataTest
 ```
-
-
-
 
 <div>
 <style scoped>
@@ -233,11 +216,13 @@ DataTest
     .dataframe tbody tr th {
         vertical-align: top;
     }
-
+    
     .dataframe thead th {
         text-align: right;
     }
+
 </style>
+
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -319,9 +304,7 @@ DataTest
 <p>500 rows × 3 columns</p>
 </div>
 
-
-
-# 3. Model training
+## 3. Model training
 
 $$\vec{x}\in\mathbb{R}^{1\times 2}$$
 
@@ -334,11 +317,13 @@ $$z_1 = \sigma(\vec{x}W_1+b_1)$$
 $$z_2 = \sigma(z_1W_2+b_2)$$
 
 $$\hat{y} = {\rm{softmax}}(z_2)$$
+
 *****
 
 $$Loss (W_1, W_2, b_1, b_2) = -\frac{1}{N}\sum_{i=1}^{N}[y_i\log\hat{y} +（1-y_1)\log(1-\hat{y})]$$
 
 *****
+
 $$k = 0,1,2,...$$
 
 $$W_1^{(k+1)} = W_1^{(k)} - \alpha_k\frac{\partial Loss(W_1^{(k)}, W_2^{(k)}, b_1^{(k)}, b_2^{(k})}{\partial
@@ -353,20 +338,19 @@ b_1}$$
 $$b_2^{(k+1)} = b_2^{(k)} - \alpha_k\frac{\partial Loss(W_1^{(k)}, W_2^{(k)}, b_1^{(k)}, b_2^{(k})}{\partial
 b_2}$$
 
-
 ```python
 class DeepNeuralNetworkModel(nn.Module):
-    
+
     # Constructor of the class
     def __init__(self, input_dim1, output_dim1, input_dim2, output_dim2):   # output_dim1 = input_dim2
         super(DeepNeuralNetworkModel, self).__init__()
-        
+
         # Fully Connected Layer 1
         self.FC_layer1 = nn.Linear(input_dim1, output_dim1)
-        
+
         # nn.init.constant_(self.FC_layerl.weight, 0.1)
         # nn.init.constant_(self.FC_layer1.bias, -0.1)
-        
+
         # Fully Connected Layer 2
         self.FC_layer2 = nn.Linear(input_dim2, output_dim2)
         # nn.init.constant_(self.FC_layer2.weight, 0.1)
@@ -374,15 +358,15 @@ class DeepNeuralNetworkModel(nn.Module):
 
         # Activation Function Sigmoid()
         self.act_sig = nn.Sigmoid()
-        
+
     # Forward propagation function
     def forward(self, x):     # dim of x: N*2
         z1_ = self.FC_layer1(x)
         z1  = self.act_sig(z1_)
-        
+
         z2_ = self.FC_layer2(z1)
         z2  = self.act_sig(z2_)
-        
+
         return z2
 ```
 
@@ -401,12 +385,10 @@ class DeepNeuralNetworkModel(nn.Module):
 
 整个模型的作用是将输入数据映射到一个输出结果，通过两个全连接层和激活函数的组合来实现非线性映射和特征提取。
 
-
 ```python
 X_vec = torch.tensor(DataTrain[["x1", "x2"]].values, dtype=torch.float32)  # N*2
 y_vec = torch.tensor(DataTrain["y"].values, dtype=torch.int64).reshape(-1, 1)  # N*1
 ```
-
 
 ```python
 alpha = 0.2
@@ -424,30 +406,29 @@ def adjust_learning_rate(optimizer, epoch):   # epoch就可以理解为是一次
         param_group['lr'] = lr
 ```
 
-
 ```python
 Iter_times = 200000
 loss_list = []
 
 for i in range(Iter_times):
-    
+
     outputs = DNN_Model.forward(X_vec)  # forward propagation
-    
+
     loss = loss_function(outputs, torch.squeeze(y_vec))  # compute loss
-    
+
     loss.backward() # backward propagation 
-    
+
     optimizer.step() # update parameters
-    
+
     optimizer.zero_grad() # Reset grad to 0
-    
+
     if (i + 1) % 500 == 0:
         print(i + 1, "iterations have been completed!")
         print("-> Now loss =", loss)
         print("=========================================")
-        
+
     adjust_learning_rate(optimizer, i)
-    
+
     loss_list.append(loss)
     # length = loss_list.__len__()
     # if(torch.abs(loss_listrlength - 11 - loss_list rlength - 21)<10** 1-15) and length >=2):
@@ -1655,9 +1636,7 @@ for i in range(Iter_times):
     -> Now loss = tensor(0.3141, grad_fn=<NllLossBackward0>)
     =========================================
 
-
 ## 4. Visualization of the Cross Entropy Loss Function
-
 
 ```python
 plt.figure(figsize = (12, 6))
@@ -1671,11 +1650,7 @@ plt.show()
 
     The length of loss_list is: 200000
 
-
-
 ![png](output_20_1.png)
-
-
 
 ```python
 # 开始测试
@@ -1688,13 +1663,9 @@ pred_vec[pred_vec > 0.50] = 1
 pred_vec[pred_vec <= 0.50 ] = 0
 ```
 
-
 ```python
 pred_vec
 ```
-
-
-
 
     tensor([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
             1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
@@ -1726,9 +1697,6 @@ pred_vec
             0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
            grad_fn=<AsStridedBackward0>)
 
-
-
-
 ```python
 y_pred_np = y_vec_test.detach().numpy()
 y_pred_np = np.squeeze(y_pred_np)
@@ -1742,16 +1710,12 @@ print ("Shape of y_pred_p:", pred_vec_np.shape)
     Shape of y_pred_p: (500,)
     Shape of y_pred_p: (500,)
 
-
-
 ```python
 accuracy = accuracy_score (y_vec_test, y_pred_np)
 print ("The accuracy score is:", accuracy)
 ```
 
     The accuracy score is: 1.0
-
-
 
 ```python
 
