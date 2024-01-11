@@ -12,7 +12,7 @@ nav:
     - Programming/README.md
     - Machine Learning:
       - Programming/MachineLearning/README.md
-      - Clustering Data: Programming/MachineLearning/pytorch_logistic_regerssion/Perfume_Grouping.md
+      - Clustering Data: Programming/MachineLearning/Perfume_Grouping/Perfume_Grouping.md
       - Logistic Regression: Programming/MachineLearning/pytorch_logistic_regerssion/pytorch_logistic_regerssion.md
       - Deep Neural Networks (DNN): Programming/MachineLearning/pytorch_DNN/pytorch_DNN.md
       - Convolutional Neural Network (CNN): Programming/MachineLearning/pytorch_convolutional_neural_network(CNN).md
