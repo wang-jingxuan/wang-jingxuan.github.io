@@ -14,8 +14,8 @@ nav:
       - Programming/MachineLearning/README.md
       - Clustering Data: Programming/MachineLearning/pytorch_logistic_regerssion/Perfume_Grouping.md
       - Logistic Regression: Programming/MachineLearning/pytorch_logistic_regerssion/pytorch_logistic_regerssion.md
-      - DNN: Programming/MachineLearning/pytorch_DNN/pytorch_DNN.md
-      - CNN: Programming/MachineLearning/pytorch_convolutional_neural_network(CNN).md
+      - Deep Neural Networks (DNN): Programming/MachineLearning/pytorch_DNN/pytorch_DNN.md
+      - Convolutional Neural Network (CNN): Programming/MachineLearning/pytorch_convolutional_neural_network(CNN).md
       - Image Classification: Programming/MachineLearning/mnist_image_classification_DNN.md
       - SVM Algorithm: Programming/MachineLearning/pytorch_SVM_algorithm.md
     - Reprint - Two Sigma Stock Market Prediction:
