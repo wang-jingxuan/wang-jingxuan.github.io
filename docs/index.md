@@ -1,6 +1,6 @@
 # Welcome! I'm Jingxuan.
 
-<img title="" src="me.jpeg" alt="" width="336">
+<img title="" src="me.jpeg" alt="" width="439" data-align="center">
 
 Intrigued by the crossroads of finance, data analysis and biotechnology, I bring a unique and open-minded perspective to my work.
 
