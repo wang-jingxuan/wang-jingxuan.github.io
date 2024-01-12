@@ -1,6 +1,6 @@
 # Welcome! I'm Jingxuan.
 
-<img title="" src="file:///Users/jingxuanwang/Documents/GitHub/wang-jingxuan.github.io/docs/me.jpeg" alt="" width="336">
+<img title="" src="me.jpeg" alt="" width="336">
 
 Intrigued by the crossroads of finance, data analysis and biotechnology, I bring a unique and open-minded perspective to my work.
 
