@@ -2,4 +2,4 @@
 
 [Download PDF](CV_Jingxuan_Wang.pdf)
 
-Update by 01/2024
+Last updated: Jan 15, 2024
