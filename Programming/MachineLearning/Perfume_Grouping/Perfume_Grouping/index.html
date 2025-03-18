@@ -1,0 +1,3175 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Jingxuan Wang">
+      
+      
+        <meta name="author" content="Jingxuan Wang">
+      
+      
+        <link rel="canonical" href="https://wang-jingxuan.github.io/Programming/MachineLearning/Perfume_Grouping/Perfume_Grouping/">
+      
+      
+        <link rel="prev" href="../../">
+      
+      
+        <link rel="next" href="../../pytorch_logistic_regerssion/pytorch_logistic_regerssion/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>Clustering Data - Jingxuan Wang</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../mkdocs/css/no-footer.css">
+    
+      <link rel="stylesheet" href="../../../../mkdocs/css/unordered-list-symbols.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-load-the-data-set" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Jingxuan Wang" class="md-header__button md-logo" aria-label="Jingxuan Wang" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jingxuan Wang
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Clustering Data
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="amber" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wang-jingxuan/wang-jingxuan.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    wang-jingxuan.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../CV/" class="md-tabs__link">
+        
+  
+    
+  
+  CV
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../" class="md-tabs__link">
+          
+  
+    
+  
+  Programming
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../AboutMe/" class="md-tabs__link">
+        
+  
+    
+  
+  About Me
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Jingxuan Wang" class="md-nav__button md-logo" aria-label="Jingxuan Wang" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Jingxuan Wang
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wang-jingxuan/wang-jingxuan.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    wang-jingxuan.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../CV/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CV
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Programming
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Programming
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Machine Learning
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Machine Learning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Clustering Data
+    
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pytorch_logistic_regerssion/pytorch_logistic_regerssion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logistic Regression
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pytorch_DNN/pytorch_DNN/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deep Neural Networks (DNN)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pytorch_convolutional_neural_network%28CNN%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Convolutional Neural Network (CNN)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mnist_image_classification_DNN/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Image Classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pytorch_SVM_algorithm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SVM Algorithm
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../Reprint/TwoSigma_StockMarket%20Prediction_Reprint/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Reprint - Two Sigma Stock Market Prediction
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Reprint - Two Sigma Stock Market Prediction
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Reprint/TwoSigma_StockMarket%20Prediction_Reprint/Two%20Sigma%20Market%20EDA/Two%20Sigma%20Market%20EDA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Market EDA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Reprint/TwoSigma_StockMarket%20Prediction_Reprint/Two%20Sigma%20News%20EDA/Two%20Sigma%20News%20EDA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    News EDA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Reprint/TwoSigma_StockMarket%20Prediction_Reprint/Two%20sigma%20Merging%20and%20Data%20prepocessing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Merging and Data preprocessing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Reprint/TwoSigma_StockMarket%20Prediction_Reprint/Two%20Sigma%20Modeling/Two%20Sigma%20Modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modeling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../AboutMe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About Me
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/wang-jingxuan/wang-jingxuan.github.io/edit/main/docs/Programming/MachineLearning/Perfume_Grouping/Perfume_Grouping.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="1-load-the-data-set">1. Load the data-set<a class="headerlink" href="#1-load-the-data-set" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocessing</span> 
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span> 
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</code></pre></div>
+<p>We need to lead the perfume dataset from sklearn</p>
+<div class="highlight"><pre><span></span><code><span class="n">perfume_preference</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Perfume preference.csv&quot;</span><span class="p">)</span>
+<span class="n">perfume_preference</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Narcissus</th>
+      <th>Agrumen</th>
+      <th>Oud</th>
+      <th>Jasmine</th>
+      <th>Amber</th>
+      <th>Neroli</th>
+      <th>Indole</th>
+      <th>Vanilla</th>
+      <th>Frankincense</th>
+      <th>Bergamot</th>
+      <th>Galbanum</th>
+      <th>Magnolia</th>
+      <th>Sandalwood</th>
+      <th>Cashmeran</th>
+      <th>Citron</th>
+      <th>Opopanax</th>
+      <th>Aliphatic Aldehydes</th>
+      <th>Vetiver</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1353.0</td>
+      <td>1252.0</td>
+      <td>4066.0</td>
+      <td>3838.0</td>
+      <td>2144.0</td>
+      <td>4404.0</td>
+      <td>32082.0</td>
+      <td>3866.0</td>
+      <td>2505.0</td>
+      <td>3972.0</td>
+      <td>4485.0</td>
+      <td>6441.0</td>
+      <td>4106.0</td>
+      <td>1722.0</td>
+      <td>4287.0</td>
+      <td>4820.0</td>
+      <td>4140.0</td>
+      <td>1463.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1089.0</td>
+      <td>2152.0</td>
+      <td>4045.0</td>
+      <td>3710.0</td>
+      <td>2235.0</td>
+      <td>4352.0</td>
+      <td>30398.0</td>
+      <td>4769.0</td>
+      <td>2995.0</td>
+      <td>4720.0</td>
+      <td>4532.0</td>
+      <td>10931.0</td>
+      <td>3794.0</td>
+      <td>1638.0</td>
+      <td>4648.0</td>
+      <td>4472.0</td>
+      <td>4184.0</td>
+      <td>1071.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4177.0</td>
+      <td>3592.0</td>
+      <td>3596.0</td>
+      <td>1745.0</td>
+      <td>3234.0</td>
+      <td>2116.0</td>
+      <td>21678.0</td>
+      <td>4864.0</td>
+      <td>3178.0</td>
+      <td>3381.0</td>
+      <td>1376.0</td>
+      <td>18153.0</td>
+      <td>2502.0</td>
+      <td>1733.0</td>
+      <td>1747.0</td>
+      <td>2728.0</td>
+      <td>4580.0</td>
+      <td>4742.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4899.0</td>
+      <td>3738.0</td>
+      <td>2454.0</td>
+      <td>3976.0</td>
+      <td>4945.0</td>
+      <td>3853.0</td>
+      <td>17963.0</td>
+      <td>3040.0</td>
+      <td>2943.0</td>
+      <td>2870.0</td>
+      <td>4016.0</td>
+      <td>18819.0</td>
+      <td>1990.0</td>
+      <td>5118.0</td>
+      <td>2391.0</td>
+      <td>2012.0</td>
+      <td>3470.0</td>
+      <td>3057.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4822.0</td>
+      <td>4030.0</td>
+      <td>3447.0</td>
+      <td>4225.0</td>
+      <td>4078.0</td>
+      <td>3772.0</td>
+      <td>23988.0</td>
+      <td>3389.0</td>
+      <td>2415.0</td>
+      <td>2695.0</td>
+      <td>3887.0</td>
+      <td>20367.0</td>
+      <td>2118.0</td>
+      <td>4530.0</td>
+      <td>2427.0</td>
+      <td>3205.0</td>
+      <td>4319.0</td>
+      <td>2289.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>9492</th>
+      <td>4857.0</td>
+      <td>3654.0</td>
+      <td>2788.0</td>
+      <td>3830.0</td>
+      <td>4272.0</td>
+      <td>4349.0</td>
+      <td>20816.0</td>
+      <td>2524.0</td>
+      <td>2675.0</td>
+      <td>2550.0</td>
+      <td>4620.0</td>
+      <td>18506.0</td>
+      <td>1999.0</td>
+      <td>5329.0</td>
+      <td>2140.0</td>
+      <td>2568.0</td>
+      <td>4358.0</td>
+      <td>2361.0</td>
+    </tr>
+    <tr>
+      <th>9493</th>
+      <td>2040.0</td>
+      <td>2561.0</td>
+      <td>3913.0</td>
+      <td>3375.0</td>
+      <td>2058.0</td>
+      <td>4722.0</td>
+      <td>19399.0</td>
+      <td>4765.0</td>
+      <td>3796.0</td>
+      <td>2949.0</td>
+      <td>2686.0</td>
+      <td>13008.0</td>
+      <td>4201.0</td>
+      <td>1830.0</td>
+      <td>1534.0</td>
+      <td>2272.0</td>
+      <td>3348.0</td>
+      <td>2992.0</td>
+    </tr>
+    <tr>
+      <th>9494</th>
+      <td>4846.0</td>
+      <td>4883.0</td>
+      <td>4153.0</td>
+      <td>2108.0</td>
+      <td>4164.0</td>
+      <td>1881.0</td>
+      <td>20551.0</td>
+      <td>5030.0</td>
+      <td>2683.0</td>
+      <td>4001.0</td>
+      <td>1450.0</td>
+      <td>24684.0</td>
+      <td>3979.0</td>
+      <td>1187.0</td>
+      <td>2107.0</td>
+      <td>2508.0</td>
+      <td>4581.0</td>
+      <td>4731.0</td>
+    </tr>
+    <tr>
+      <th>9495</th>
+      <td>4310.0</td>
+      <td>3916.0</td>
+      <td>3937.0</td>
+      <td>2488.0</td>
+      <td>3343.0</td>
+      <td>2219.0</td>
+      <td>22914.0</td>
+      <td>5104.0</td>
+      <td>2640.0</td>
+      <td>3864.0</td>
+      <td>1730.0</td>
+      <td>19874.0</td>
+      <td>3654.0</td>
+      <td>499.0</td>
+      <td>1920.0</td>
+      <td>2971.0</td>
+      <td>4476.0</td>
+      <td>4654.0</td>
+    </tr>
+    <tr>
+      <th>9496</th>
+      <td>2698.0</td>
+      <td>3174.0</td>
+      <td>3984.0</td>
+      <td>3541.0</td>
+      <td>2522.0</td>
+      <td>4946.0</td>
+      <td>18512.0</td>
+      <td>5165.0</td>
+      <td>4167.0</td>
+      <td>2704.0</td>
+      <td>2536.0</td>
+      <td>16069.0</td>
+      <td>3851.0</td>
+      <td>1620.0</td>
+      <td>1830.0</td>
+      <td>2084.0</td>
+      <td>3240.0</td>
+      <td>3644.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>9497 rows × 18 columns</p>
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="n">perfume_score</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Perfume Score.csv&quot;</span><span class="p">)</span>
+<span class="n">perfume_score</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Narcissus</th>
+      <th>Agrumen</th>
+      <th>Oud</th>
+      <th>Jasmine</th>
+      <th>Amber</th>
+      <th>Neroli</th>
+      <th>Indole</th>
+      <th>Vanilla</th>
+      <th>Frankincense</th>
+      <th>Bergamot</th>
+      <th>Galbanum</th>
+      <th>Magnolia</th>
+      <th>Sandalwood</th>
+      <th>Cashmeran</th>
+      <th>Citron</th>
+      <th>Opopanax</th>
+      <th>Aliphatic Aldehydes</th>
+      <th>Vetiver</th>
+      <th>Scent Quality Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>489.766</td>
+      <td>343.510</td>
+      <td>638.519</td>
+      <td>315.377</td>
+      <td>966.417</td>
+      <td>913.256</td>
+      <td>1015.036</td>
+      <td>479.027</td>
+      <td>485.797</td>
+      <td>2918.050062</td>
+      <td>108.538</td>
+      <td>727.438</td>
+      <td>936.842</td>
+      <td>4801.306119</td>
+      <td>261.952</td>
+      <td>148.593</td>
+      <td>783.264</td>
+      <td>809.541</td>
+      <td>1.302700e+07</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>472.841</td>
+      <td>218.288</td>
+      <td>642.332</td>
+      <td>210.582</td>
+      <td>995.068</td>
+      <td>989.447</td>
+      <td>958.614</td>
+      <td>507.113</td>
+      <td>242.015</td>
+      <td>2119.074840</td>
+      <td>246.654</td>
+      <td>755.477</td>
+      <td>840.936</td>
+      <td>4896.315590</td>
+      <td>149.498</td>
+      <td>44.490</td>
+      <td>906.204</td>
+      <td>815.512</td>
+      <td>1.159073e+07</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>472.620</td>
+      <td>323.480</td>
+      <td>696.770</td>
+      <td>288.379</td>
+      <td>1006.334</td>
+      <td>875.163</td>
+      <td>987.398</td>
+      <td>611.463</td>
+      <td>410.451</td>
+      <td>2679.139347</td>
+      <td>281.022</td>
+      <td>729.155</td>
+      <td>825.386</td>
+      <td>5350.521973</td>
+      <td>177.980</td>
+      <td>141.612</td>
+      <td>705.294</td>
+      <td>794.394</td>
+      <td>1.367693e+07</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>503.155</td>
+      <td>397.632</td>
+      <td>644.533</td>
+      <td>151.414</td>
+      <td>960.097</td>
+      <td>905.462</td>
+      <td>1031.227</td>
+      <td>469.357</td>
+      <td>388.405</td>
+      <td>1784.035393</td>
+      <td>280.953</td>
+      <td>711.906</td>
+      <td>786.198</td>
+      <td>5029.939322</td>
+      <td>29.515</td>
+      <td>149.231</td>
+      <td>678.681</td>
+      <td>837.614</td>
+      <td>7.997427e+06</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>499.780</td>
+      <td>344.096</td>
+      <td>643.764</td>
+      <td>353.518</td>
+      <td>1033.988</td>
+      <td>978.976</td>
+      <td>871.312</td>
+      <td>439.266</td>
+      <td>311.002</td>
+      <td>3236.214279</td>
+      <td>272.058</td>
+      <td>737.003</td>
+      <td>898.238</td>
+      <td>4988.788504</td>
+      <td>138.884</td>
+      <td>122.238</td>
+      <td>622.090</td>
+      <td>824.174</td>
+      <td>1.113290e+07</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>4999</th>
+      <td>449.162</td>
+      <td>353.896</td>
+      <td>680.031</td>
+      <td>220.188</td>
+      <td>940.716</td>
+      <td>851.543</td>
+      <td>951.874</td>
+      <td>600.726</td>
+      <td>383.718</td>
+      <td>2209.955448</td>
+      <td>122.345</td>
+      <td>852.887</td>
+      <td>973.806</td>
+      <td>5122.835105</td>
+      <td>50.474</td>
+      <td>87.481</td>
+      <td>662.834</td>
+      <td>821.282</td>
+      <td>1.072665e+07</td>
+    </tr>
+    <tr>
+      <th>5000</th>
+      <td>526.781</td>
+      <td>392.868</td>
+      <td>652.819</td>
+      <td>268.901</td>
+      <td>983.403</td>
+      <td>700.787</td>
+      <td>1031.042</td>
+      <td>583.384</td>
+      <td>414.174</td>
+      <td>2453.815268</td>
+      <td>368.325</td>
+      <td>770.897</td>
+      <td>825.038</td>
+      <td>5009.288848</td>
+      <td>195.544</td>
+      <td>83.047</td>
+      <td>819.217</td>
+      <td>830.439</td>
+      <td>1.426609e+07</td>
+    </tr>
+    <tr>
+      <th>5001</th>
+      <td>475.160</td>
+      <td>256.740</td>
+      <td>655.360</td>
+      <td>204.422</td>
+      <td>905.181</td>
+      <td>1055.073</td>
+      <td>1008.550</td>
+      <td>539.192</td>
+      <td>399.411</td>
+      <td>2007.515839</td>
+      <td>192.985</td>
+      <td>774.179</td>
+      <td>747.784</td>
+      <td>4925.275302</td>
+      <td>205.319</td>
+      <td>143.601</td>
+      <td>741.248</td>
+      <td>780.727</td>
+      <td>9.882660e+06</td>
+    </tr>
+    <tr>
+      <th>5002</th>
+      <td>481.422</td>
+      <td>278.652</td>
+      <td>647.467</td>
+      <td>147.307</td>
+      <td>1033.814</td>
+      <td>880.379</td>
+      <td>1053.847</td>
+      <td>510.981</td>
+      <td>410.661</td>
+      <td>1762.999938</td>
+      <td>144.866</td>
+      <td>802.051</td>
+      <td>890.813</td>
+      <td>4992.597380</td>
+      <td>116.158</td>
+      <td>80.665</td>
+      <td>804.591</td>
+      <td>792.583</td>
+      <td>9.200338e+06</td>
+    </tr>
+    <tr>
+      <th>5003</th>
+      <td>476.130</td>
+      <td>364.371</td>
+      <td>659.429</td>
+      <td>224.550</td>
+      <td>1207.776</td>
+      <td>837.054</td>
+      <td>882.858</td>
+      <td>625.714</td>
+      <td>361.077</td>
+      <td>2175.815594</td>
+      <td>231.943</td>
+      <td>621.123</td>
+      <td>737.455</td>
+      <td>4939.983539</td>
+      <td>231.950</td>
+      <td>178.103</td>
+      <td>710.752</td>
+      <td>867.652</td>
+      <td>1.195802e+07</td>
+    </tr>
+  </tbody>
+</table>
+<p>5004 rows × 19 columns</p>
+</div>
+
+<h1 id="2-review-the-data-quatitatively">2. Review the data quatitatively<a class="headerlink" href="#2-review-the-data-quatitatively" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><span class="n">perfume_score</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Narcissus</th>
+      <th>Agrumen</th>
+      <th>Oud</th>
+      <th>Jasmine</th>
+      <th>Amber</th>
+      <th>Neroli</th>
+      <th>Indole</th>
+      <th>Vanilla</th>
+      <th>Frankincense</th>
+      <th>Bergamot</th>
+      <th>Galbanum</th>
+      <th>Magnolia</th>
+      <th>Sandalwood</th>
+      <th>Cashmeran</th>
+      <th>Citron</th>
+      <th>Opopanax</th>
+      <th>Aliphatic Aldehydes</th>
+      <th>Vetiver</th>
+      <th>Scent Quality Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5004.000000</td>
+      <td>5.004000e+03</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>470.922058</td>
+      <td>346.112136</td>
+      <td>674.849797</td>
+      <td>209.349424</td>
+      <td>988.363780</td>
+      <td>888.163961</td>
+      <td>944.930020</td>
+      <td>564.445091</td>
+      <td>378.302281</td>
+      <td>2186.942959</td>
+      <td>250.475366</td>
+      <td>769.066442</td>
+      <td>866.283868</td>
+      <td>5172.149509</td>
+      <td>121.493370</td>
+      <td>118.018880</td>
+      <td>703.506534</td>
+      <td>802.327559</td>
+      <td>1.079593e+07</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>23.038942</td>
+      <td>59.788428</td>
+      <td>36.724524</td>
+      <td>80.932744</td>
+      <td>74.334501</td>
+      <td>84.265546</td>
+      <td>70.080494</td>
+      <td>72.778522</td>
+      <td>60.988463</td>
+      <td>575.210895</td>
+      <td>76.697327</td>
+      <td>89.079681</td>
+      <td>87.392412</td>
+      <td>275.760510</td>
+      <td>70.881267</td>
+      <td>62.237022</td>
+      <td>99.694353</td>
+      <td>25.963051</td>
+      <td>2.867554e+06</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>383.651000</td>
+      <td>121.396000</td>
+      <td>543.403000</td>
+      <td>0.000000</td>
+      <td>652.234000</td>
+      <td>539.166000</td>
+      <td>683.213000</td>
+      <td>287.286000</td>
+      <td>142.905000</td>
+      <td>487.811886</td>
+      <td>0.000000</td>
+      <td>457.725000</td>
+      <td>545.930000</td>
+      <td>4119.640577</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>317.364000</td>
+      <td>714.678000</td>
+      <td>3.860472e+06</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>455.292000</td>
+      <td>305.453750</td>
+      <td>650.423250</td>
+      <td>154.964250</td>
+      <td>938.166000</td>
+      <td>830.146500</td>
+      <td>896.683000</td>
+      <td>514.985750</td>
+      <td>337.244250</td>
+      <td>1804.401369</td>
+      <td>198.506500</td>
+      <td>707.927750</td>
+      <td>809.248500</td>
+      <td>4990.344908</td>
+      <td>69.145750</td>
+      <td>74.265250</td>
+      <td>635.601500</td>
+      <td>784.980750</td>
+      <td>8.777066e+06</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>470.695500</td>
+      <td>346.160500</td>
+      <td>675.707000</td>
+      <td>209.278000</td>
+      <td>989.786500</td>
+      <td>889.092500</td>
+      <td>945.116500</td>
+      <td>563.099000</td>
+      <td>378.364000</td>
+      <td>2191.656699</td>
+      <td>249.945000</td>
+      <td>770.214000</td>
+      <td>867.822500</td>
+      <td>5174.842876</td>
+      <td>118.840500</td>
+      <td>117.010500</td>
+      <td>703.989000</td>
+      <td>802.968000</td>
+      <td>1.057777e+07</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>486.797750</td>
+      <td>386.261000</td>
+      <td>699.350250</td>
+      <td>262.900250</td>
+      <td>1038.281500</td>
+      <td>945.673750</td>
+      <td>993.838500</td>
+      <td>612.617000</td>
+      <td>418.213250</td>
+      <td>2571.954572</td>
+      <td>301.876250</td>
+      <td>830.076000</td>
+      <td>924.809000</td>
+      <td>5358.193002</td>
+      <td>170.583000</td>
+      <td>160.389500</td>
+      <td>769.465500</td>
+      <td>819.953500</td>
+      <td>1.255241e+07</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>548.708000</td>
+      <td>562.238000</td>
+      <td>817.061000</td>
+      <td>481.593000</td>
+      <td>1258.446000</td>
+      <td>1183.733000</td>
+      <td>1214.694000</td>
+      <td>825.775000</td>
+      <td>646.347000</td>
+      <td>4079.337285</td>
+      <td>535.614000</td>
+      <td>1116.747000</td>
+      <td>1195.179000</td>
+      <td>6231.998892</td>
+      <td>396.534000</td>
+      <td>348.029000</td>
+      <td>1049.738000</td>
+      <td>888.987000</td>
+      <td>2.203800e+07</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="n">perfume_preference</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Narcissus</th>
+      <th>Agrumen</th>
+      <th>Oud</th>
+      <th>Jasmine</th>
+      <th>Amber</th>
+      <th>Neroli</th>
+      <th>Indole</th>
+      <th>Vanilla</th>
+      <th>Frankincense</th>
+      <th>Bergamot</th>
+      <th>Galbanum</th>
+      <th>Magnolia</th>
+      <th>Sandalwood</th>
+      <th>Cashmeran</th>
+      <th>Citron</th>
+      <th>Opopanax</th>
+      <th>Aliphatic Aldehydes</th>
+      <th>Vetiver</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>9494.000000</td>
+      <td>9493.000000</td>
+      <td>9489.000000</td>
+      <td>9495.000000</td>
+      <td>9494.000000</td>
+      <td>9492.000000</td>
+      <td>9489.000000</td>
+      <td>9494.000000</td>
+      <td>9491.000000</td>
+      <td>9490.000000</td>
+      <td>9489.000000</td>
+      <td>9493.000000</td>
+      <td>9492.000000</td>
+      <td>9492.000000</td>
+      <td>9487.000000</td>
+      <td>9489.000000</td>
+      <td>9492.000000</td>
+      <td>9487.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>3265.382663</td>
+      <td>3121.755083</td>
+      <td>3763.242597</td>
+      <td>3106.079726</td>
+      <td>3005.079524</td>
+      <td>3821.780341</td>
+      <td>22736.683001</td>
+      <td>4312.222878</td>
+      <td>3113.745970</td>
+      <td>3426.057113</td>
+      <td>3139.691538</td>
+      <td>15808.726325</td>
+      <td>3217.781184</td>
+      <td>2446.029709</td>
+      <td>2479.632023</td>
+      <td>2947.475182</td>
+      <td>4202.323957</td>
+      <td>3008.485190</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1390.405062</td>
+      <td>924.872149</td>
+      <td>552.936664</td>
+      <td>686.367481</td>
+      <td>991.974076</td>
+      <td>1059.493773</td>
+      <td>5232.947390</td>
+      <td>861.309113</td>
+      <td>661.345376</td>
+      <td>740.826433</td>
+      <td>1223.697310</td>
+      <td>4625.023111</td>
+      <td>785.173638</td>
+      <td>1342.850878</td>
+      <td>1191.003546</td>
+      <td>1046.691982</td>
+      <td>409.025964</td>
+      <td>1219.619389</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>515.000000</td>
+      <td>584.000000</td>
+      <td>1998.000000</td>
+      <td>1373.000000</td>
+      <td>946.000000</td>
+      <td>642.000000</td>
+      <td>13318.000000</td>
+      <td>1685.000000</td>
+      <td>1239.000000</td>
+      <td>1703.000000</td>
+      <td>551.000000</td>
+      <td>3087.000000</td>
+      <td>1237.000000</td>
+      <td>58.000000</td>
+      <td>30.000000</td>
+      <td>1057.000000</td>
+      <td>2256.000000</td>
+      <td>283.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>1962.000000</td>
+      <td>2334.000000</td>
+      <td>3383.000000</td>
+      <td>2538.500000</td>
+      <td>2119.000000</td>
+      <td>3176.000000</td>
+      <td>18746.000000</td>
+      <td>3642.000000</td>
+      <td>2628.000000</td>
+      <td>2728.000000</td>
+      <td>2071.000000</td>
+      <td>11880.000000</td>
+      <td>2545.750000</td>
+      <td>1581.000000</td>
+      <td>1620.000000</td>
+      <td>2149.000000</td>
+      <td>3935.750000</td>
+      <td>2093.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>2911.500000</td>
+      <td>3372.000000</td>
+      <td>3780.000000</td>
+      <td>3201.000000</td>
+      <td>2941.000000</td>
+      <td>4193.500000</td>
+      <td>20910.000000</td>
+      <td>4573.000000</td>
+      <td>2908.000000</td>
+      <td>3525.000000</td>
+      <td>2991.000000</td>
+      <td>17055.000000</td>
+      <td>3515.000000</td>
+      <td>1859.500000</td>
+      <td>2069.000000</td>
+      <td>2581.000000</td>
+      <td>4215.000000</td>
+      <td>2873.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>4598.000000</td>
+      <td>3913.000000</td>
+      <td>4142.000000</td>
+      <td>3616.000000</td>
+      <td>3764.000000</td>
+      <td>4569.000000</td>
+      <td>28136.000000</td>
+      <td>4953.000000</td>
+      <td>3716.000000</td>
+      <td>4036.000000</td>
+      <td>4293.000000</td>
+      <td>19765.000000</td>
+      <td>3773.000000</td>
+      <td>2775.250000</td>
+      <td>3965.500000</td>
+      <td>4037.000000</td>
+      <td>4486.000000</td>
+      <td>3863.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>5761.000000</td>
+      <td>5119.000000</td>
+      <td>5811.000000</td>
+      <td>4936.000000</td>
+      <td>5798.000000</td>
+      <td>5826.000000</td>
+      <td>35793.000000</td>
+      <td>6136.000000</td>
+      <td>4814.000000</td>
+      <td>5267.000000</td>
+      <td>5998.000000</td>
+      <td>25873.000000</td>
+      <td>4879.000000</td>
+      <td>6348.000000</td>
+      <td>5061.000000</td>
+      <td>5562.000000</td>
+      <td>5547.000000</td>
+      <td>6072.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>We should also review yje data to see if there are any missing values.</p>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">perfume_score</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Narcissus              False
+Agrumen                False
+Oud                    False
+Jasmine                False
+Amber                  False
+Neroli                 False
+Indole                 False
+Vanilla                False
+Frankincense           False
+Bergamot               False
+Galbanum               False
+Magnolia               False
+Sandalwood             False
+Cashmeran              False
+Citron                 False
+Opopanax               False
+Aliphatic Aldehydes    False
+Vetiver                False
+Scent Quality Score    False
+dtype: bool
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Narcissus              True
+Agrumen                True
+Oud                    True
+Jasmine                True
+Amber                  True
+Neroli                 True
+Indole                 True
+Vanilla                True
+Frankincense           True
+Bergamot               True
+Galbanum               True
+Magnolia               True
+Sandalwood             True
+Cashmeran              True
+Citron                 True
+Opopanax               True
+Aliphatic Aldehydes    True
+Vetiver                True
+dtype: bool
+</code></pre></div>
+<p>Turns out there's a flaw in the perfume preference data.</p>
+<h1 id="3-clean-and-tidy-the-data">3. Clean and tidy the data<a class="headerlink" href="#3-clean-and-tidy-the-data" title="Permanent link">&para;</a></h1>
+<p>Display a count of missing data</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">perfume_preference</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>104
+</code></pre></div>
+<p>Visualising missing data</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">missingno</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">msno</span>
+<span class="n">perfume_preference_columns</span> <span class="o">=</span> <span class="n">perfume_preference</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,:]</span>
+<span class="n">msno</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">perfume_preference_columns</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a85e7c40c8&gt;
+</code></pre></div>
+<p><img alt="png" src="../output_16_1.png" /></p>
+<p>Draw a bar-plot to indicate the amount of missingdata in each feature</p>
+<div class="highlight"><pre><span></span><code><span class="n">msno</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">perfume_preference_columns</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1a85eb2b208&gt;
+</code></pre></div>
+<p><img alt="png" src="../output_18_1.png" /></p>
+<p>Impute missing data using the mean of other data from the same feature</p>
+<div class="highlight"><pre><span></span><code><span class="n">perfume_preference</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">perfume_preference</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> 
+<span class="n">perfume_preference</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Narcissus</th>
+      <th>Agrumen</th>
+      <th>Oud</th>
+      <th>Jasmine</th>
+      <th>Amber</th>
+      <th>Neroli</th>
+      <th>Indole</th>
+      <th>Vanilla</th>
+      <th>Frankincense</th>
+      <th>Bergamot</th>
+      <th>Galbanum</th>
+      <th>Magnolia</th>
+      <th>Sandalwood</th>
+      <th>Cashmeran</th>
+      <th>Citron</th>
+      <th>Opopanax</th>
+      <th>Aliphatic Aldehydes</th>
+      <th>Vetiver</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1353.0</td>
+      <td>1252.0</td>
+      <td>4066.0</td>
+      <td>3838.0</td>
+      <td>2144.0</td>
+      <td>4404.0</td>
+      <td>32082.0</td>
+      <td>3866.0</td>
+      <td>2505.0</td>
+      <td>3972.0</td>
+      <td>4485.0</td>
+      <td>6441.0</td>
+      <td>4106.0</td>
+      <td>1722.0</td>
+      <td>4287.0</td>
+      <td>4820.0</td>
+      <td>4140.0</td>
+      <td>1463.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1089.0</td>
+      <td>2152.0</td>
+      <td>4045.0</td>
+      <td>3710.0</td>
+      <td>2235.0</td>
+      <td>4352.0</td>
+      <td>30398.0</td>
+      <td>4769.0</td>
+      <td>2995.0</td>
+      <td>4720.0</td>
+      <td>4532.0</td>
+      <td>10931.0</td>
+      <td>3794.0</td>
+      <td>1638.0</td>
+      <td>4648.0</td>
+      <td>4472.0</td>
+      <td>4184.0</td>
+      <td>1071.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4177.0</td>
+      <td>3592.0</td>
+      <td>3596.0</td>
+      <td>1745.0</td>
+      <td>3234.0</td>
+      <td>2116.0</td>
+      <td>21678.0</td>
+      <td>4864.0</td>
+      <td>3178.0</td>
+      <td>3381.0</td>
+      <td>1376.0</td>
+      <td>18153.0</td>
+      <td>2502.0</td>
+      <td>1733.0</td>
+      <td>1747.0</td>
+      <td>2728.0</td>
+      <td>4580.0</td>
+      <td>4742.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4899.0</td>
+      <td>3738.0</td>
+      <td>2454.0</td>
+      <td>3976.0</td>
+      <td>4945.0</td>
+      <td>3853.0</td>
+      <td>17963.0</td>
+      <td>3040.0</td>
+      <td>2943.0</td>
+      <td>2870.0</td>
+      <td>4016.0</td>
+      <td>18819.0</td>
+      <td>1990.0</td>
+      <td>5118.0</td>
+      <td>2391.0</td>
+      <td>2012.0</td>
+      <td>3470.0</td>
+      <td>3057.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4822.0</td>
+      <td>4030.0</td>
+      <td>3447.0</td>
+      <td>4225.0</td>
+      <td>4078.0</td>
+      <td>3772.0</td>
+      <td>23988.0</td>
+      <td>3389.0</td>
+      <td>2415.0</td>
+      <td>2695.0</td>
+      <td>3887.0</td>
+      <td>20367.0</td>
+      <td>2118.0</td>
+      <td>4530.0</td>
+      <td>2427.0</td>
+      <td>3205.0</td>
+      <td>4319.0</td>
+      <td>2289.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>9492</th>
+      <td>4857.0</td>
+      <td>3654.0</td>
+      <td>2788.0</td>
+      <td>3830.0</td>
+      <td>4272.0</td>
+      <td>4349.0</td>
+      <td>20816.0</td>
+      <td>2524.0</td>
+      <td>2675.0</td>
+      <td>2550.0</td>
+      <td>4620.0</td>
+      <td>18506.0</td>
+      <td>1999.0</td>
+      <td>5329.0</td>
+      <td>2140.0</td>
+      <td>2568.0</td>
+      <td>4358.0</td>
+      <td>2361.0</td>
+    </tr>
+    <tr>
+      <th>9493</th>
+      <td>2040.0</td>
+      <td>2561.0</td>
+      <td>3913.0</td>
+      <td>3375.0</td>
+      <td>2058.0</td>
+      <td>4722.0</td>
+      <td>19399.0</td>
+      <td>4765.0</td>
+      <td>3796.0</td>
+      <td>2949.0</td>
+      <td>2686.0</td>
+      <td>13008.0</td>
+      <td>4201.0</td>
+      <td>1830.0</td>
+      <td>1534.0</td>
+      <td>2272.0</td>
+      <td>3348.0</td>
+      <td>2992.0</td>
+    </tr>
+    <tr>
+      <th>9494</th>
+      <td>4846.0</td>
+      <td>4883.0</td>
+      <td>4153.0</td>
+      <td>2108.0</td>
+      <td>4164.0</td>
+      <td>1881.0</td>
+      <td>20551.0</td>
+      <td>5030.0</td>
+      <td>2683.0</td>
+      <td>4001.0</td>
+      <td>1450.0</td>
+      <td>24684.0</td>
+      <td>3979.0</td>
+      <td>1187.0</td>
+      <td>2107.0</td>
+      <td>2508.0</td>
+      <td>4581.0</td>
+      <td>4731.0</td>
+    </tr>
+    <tr>
+      <th>9495</th>
+      <td>4310.0</td>
+      <td>3916.0</td>
+      <td>3937.0</td>
+      <td>2488.0</td>
+      <td>3343.0</td>
+      <td>2219.0</td>
+      <td>22914.0</td>
+      <td>5104.0</td>
+      <td>2640.0</td>
+      <td>3864.0</td>
+      <td>1730.0</td>
+      <td>19874.0</td>
+      <td>3654.0</td>
+      <td>499.0</td>
+      <td>1920.0</td>
+      <td>2971.0</td>
+      <td>4476.0</td>
+      <td>4654.0</td>
+    </tr>
+    <tr>
+      <th>9496</th>
+      <td>2698.0</td>
+      <td>3174.0</td>
+      <td>3984.0</td>
+      <td>3541.0</td>
+      <td>2522.0</td>
+      <td>4946.0</td>
+      <td>18512.0</td>
+      <td>5165.0</td>
+      <td>4167.0</td>
+      <td>2704.0</td>
+      <td>2536.0</td>
+      <td>16069.0</td>
+      <td>3851.0</td>
+      <td>1620.0</td>
+      <td>1830.0</td>
+      <td>2084.0</td>
+      <td>3240.0</td>
+      <td>3644.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>9497 rows × 18 columns</p>
+</div>
+
+<p>Do a final check by re-counting the amount of missing data</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">perfume_preference</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> 
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>0
+</code></pre></div>
+<h1 id="4-review-the-data-visually">4. Review the data visually<a class="headerlink" href="#4-review-the-data-visually" title="Permanent link">&para;</a></h1>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pandas.plotting</span><span class="w"> </span><span class="kn">import</span> <span class="n">scatter_matrix</span>
+<span class="n">scatter_matrix</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">));</span>
+</code></pre></div>
+<p><img alt="png" src="../output_24_0.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">perfume_score</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">));</span>
+</code></pre></div>
+<p><img alt="png" src="../output_25_0.png" /></p>
+<p><strong>Correlation matrix:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="n">correlation_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">perfume_preference</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)})</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="n">annot</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Reds&#39;</span><span class="p">)</span>
+<span class="n">bottom</span><span class="p">,</span><span class="n">top</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">bottom</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">top</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>(18.5, -0.5)
+</code></pre></div>
+<p><img alt="png" src="../output_27_1.png" /></p>
+<p>From this correlation map, we see that:
+- Vetiver is strongly correlated with Neroli and Citron
+- Opopanax is strongly correlated with Bergamot
+- ...</p>
+<div class="highlight"><pre><span></span><code><span class="n">correlation_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">perfume_score</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">rc</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)})</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="n">annot</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;Reds&#39;</span><span class="p">)</span>
+<span class="n">bottom</span><span class="p">,</span><span class="n">top</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">bottom</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">top</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>(19.5, -0.5)
+</code></pre></div>
+<p><img alt="png" src="../output_29_1.png" /></p>
+<p>From this correlation map, we see that:
+- Scent Quality Score is strongly correlated with Bergamot and Jasmine
+- Scent Quality Score is also affected by Aliphatic Aldehydes and Vanilla to some extent
+- Jasmine and Bergamot are correlated with each other. We should not use both Jasmine and Vanillafor building the model considering the 'double counting'their impact on the result
+- Also Oud and Cashmeran are correlated.</p>
+<p>Therefore, we choose <strong>Jasmine</strong>, <strong>Vanilla</strong> and <strong>Aliphatic Aldhydes</strong> for building our first model.</p>
+<p>Three key features(Jasmine, Vanilla and Aliphatic Aldehydes) in a 3D plot:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span> <span class="o">=</span> <span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">perfume_score</span><span class="p">[</span><span class="s1">&#39;Jasmine&#39;</span><span class="p">],</span> <span class="n">perfume_score</span><span class="p">[</span><span class="s1">&#39;Vanilla&#39;</span><span class="p">],</span> <span class="n">perfume_score</span><span class="p">[</span><span class="s1">&#39;Aliphatic Aldehydes&#39;</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">perfume_score</span><span class="p">[</span><span class="s1">&#39;Scent Quality Score&#39;</span><span class="p">],</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;gist_heat&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>&lt;mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x1a86c1b2908&gt;
+</code></pre></div>
+<p><img alt="png" src="../output_31_1.png" /></p>
+<h1 id="5-polynominal-regression">5. Polynominal regression<a class="headerlink" href="#5-polynominal-regression" title="Permanent link">&para;</a></h1>
+<h2 id="51-select-and-split-the-data-processing-the-perfume-score-data">5.1 Select and split the data - processing the perfume score data<a class="headerlink" href="#51-select-and-split-the-data-processing-the-perfume-score-data" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">perfume_score</span><span class="p">[</span><span class="s1">&#39;Jasmine&#39;</span><span class="p">],</span> <span class="n">perfume_score</span><span class="p">[</span><span class="s1">&#39;Vanilla&#39;</span><span class="p">],</span> <span class="n">perfume_score</span><span class="p">[</span><span class="s1">&#39;Aliphatic Aldehydes&#39;</span><span class="p">]],</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Jasmine&#39;</span><span class="p">,</span><span class="s1">&#39;Vanilla&#39;</span><span class="p">,</span><span class="s1">&#39;Aliphatic Aldehydes&#39;</span><span class="p">])</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">perfume_score</span><span class="p">[</span><span class="s1">&#39;Scent Quality Score&#39;</span><span class="p">]</span>
+<span class="n">X</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Jasmine</th>
+      <th>Vanilla</th>
+      <th>Aliphatic Aldehydes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>315.377</td>
+      <td>479.027</td>
+      <td>783.264</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>210.582</td>
+      <td>507.113</td>
+      <td>906.204</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>288.379</td>
+      <td>611.463</td>
+      <td>705.294</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>151.414</td>
+      <td>469.357</td>
+      <td>678.681</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>353.518</td>
+      <td>439.266</td>
+      <td>622.090</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>4999</th>
+      <td>220.188</td>
+      <td>600.726</td>
+      <td>662.834</td>
+    </tr>
+    <tr>
+      <th>5000</th>
+      <td>268.901</td>
+      <td>583.384</td>
+      <td>819.217</td>
+    </tr>
+    <tr>
+      <th>5001</th>
+      <td>204.422</td>
+      <td>539.192</td>
+      <td>741.248</td>
+    </tr>
+    <tr>
+      <th>5002</th>
+      <td>147.307</td>
+      <td>510.981</td>
+      <td>804.591</td>
+    </tr>
+    <tr>
+      <th>5003</th>
+      <td>224.550</td>
+      <td>625.714</td>
+      <td>710.752</td>
+    </tr>
+  </tbody>
+</table>
+<p>5004 rows × 3 columns</p>
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>      Jasmine  Vanilla  Aliphatic Aldehydes
+4427  170.793  570.382              908.473
+3248  158.091  416.565              641.899
+2286  203.866  600.023              642.780
+581   232.697  436.631              720.934
+1188   90.112  538.792              814.159
+2535   17.924  585.713              618.380
+2151  252.522  624.270              621.184
+113   332.608  570.309              561.070
+3801   80.332  487.969              710.184
+3430  362.441  550.813              800.493
+</code></pre></div>
+<h2 id="52-build-the-model">5.2 Build the model<a class="headerlink" href="#52-build-the-model" title="Permanent link">&para;</a></h2>
+<p>We first generate the features and take a look at the extended set of feature names:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<span class="n">poly_features</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">X_train_poly</span> <span class="o">=</span> <span class="n">poly_features</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">poly_features</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">([</span><span class="s2">&quot;Jasmine&quot;</span><span class="p">,</span><span class="s2">&quot;Vanilla&quot;</span><span class="p">,</span><span class="s2">&quot;Aliphatic Aldehydes&quot;</span><span class="p">]))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>[&#39;1&#39;, &#39;Jasmine&#39;, &#39;Vanilla&#39;, &#39;Aliphatic Aldehydes&#39;, &#39;Jasmine^2&#39;, &#39;Jasmine Vanilla&#39;, &#39;Jasmine Aliphatic Aldehydes&#39;, &#39;Vanilla^2&#39;, &#39;Vanilla Aliphatic Aldehydes&#39;, &#39;Aliphatic Aldehydes^2&#39;, &#39;Jasmine^3&#39;, &#39;Jasmine^2 Vanilla&#39;, &#39;Jasmine^2 Aliphatic Aldehydes&#39;, &#39;Jasmine Vanilla^2&#39;, &#39;Jasmine Vanilla Aliphatic Aldehydes&#39;, &#39;Jasmine Aliphatic Aldehydes^2&#39;, &#39;Vanilla^3&#39;, &#39;Vanilla^2 Aliphatic Aldehydes&#39;, &#39;Vanilla Aliphatic Aldehydes^2&#39;, &#39;Aliphatic Aldehydes^3&#39;]
+</code></pre></div>
+<p>Actual data:</p>
+<div class="highlight"><pre><span></span><code><span class="n">X_train_poly</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>array([[1.00000000e+00, 1.70793000e+02, 5.70382000e+02, 9.08473000e+02,
+        2.91702488e+04, 9.74172529e+04, 1.55160829e+05, 3.25335626e+05,
+        5.18176647e+05, 8.25323192e+05, 4.98207431e+06, 1.66381849e+07,
+        2.65003835e+07, 5.55650476e+07, 8.85009440e+07, 1.40959424e+08,
+        1.85565585e+08, 2.95558632e+08, 4.70749493e+08, 7.49783836e+08],
+       [1.00000000e+00, 1.58091000e+02, 4.16565000e+02, 6.41899000e+02,
+        2.49927643e+04, 6.58551774e+04, 1.01478455e+05, 1.73526399e+05,
+        2.67392657e+05, 4.12034326e+05, 3.95113110e+06, 1.04111109e+07,
+        1.60428304e+07, 2.74329620e+07, 4.22723725e+07, 6.51389187e+07,
+        7.22850245e+07, 1.11386422e+08, 1.71639079e+08, 2.64484422e+08],
+       [1.00000000e+00, 2.03866000e+02, 6.00023000e+02, 6.42780000e+02,
+        4.15613460e+04, 1.22324289e+05, 1.31040987e+05, 3.60027601e+05,
+        3.85682784e+05, 4.13166128e+05, 8.47294535e+06, 2.49377635e+07,
+        2.67148020e+07, 7.33973868e+07, 7.86276064e+07, 8.42305259e+07,
+        2.16024841e+08, 2.31418541e+08, 2.47909180e+08, 2.65574924e+08],
+       [1.00000000e+00, 2.32697000e+02, 4.36631000e+02, 7.20934000e+02,
+        5.41478938e+04, 1.01602724e+05, 1.67759179e+05, 1.90646630e+05,
+        3.14782133e+05, 5.19745832e+05, 1.26000524e+07, 2.36426490e+07,
+        3.90370577e+07, 4.43628989e+07, 7.32488581e+07, 1.20943296e+08,
+        8.32422288e+07, 1.37443638e+08, 2.26937143e+08, 3.74702442e+08],
+       [1.00000000e+00, 9.01120000e+01, 5.38792000e+02, 8.14159000e+02,
+        8.12017254e+03, 4.85516247e+04, 7.33654958e+04, 2.90296819e+05,
+        4.38662356e+05, 6.62854877e+05, 7.31724988e+05, 4.37508401e+06,
+        6.61111156e+06, 2.61592270e+07, 3.95287422e+07, 5.97311787e+07,
+        1.56409604e+08, 2.36347768e+08, 3.57140905e+08, 5.39669264e+08],
+       [1.00000000e+00, 1.79240000e+01, 5.85713000e+02, 6.18380000e+02,
+        3.21269776e+02, 1.04983198e+04, 1.10838431e+04, 3.43059718e+05,
+        3.62193205e+05, 3.82393824e+05, 5.75843947e+03, 1.88171884e+05,
+        1.98666804e+05, 6.14900239e+06, 6.49195101e+06, 6.85402691e+06,
+        2.00934537e+08, 2.12141269e+08, 2.23973034e+08, 2.36464693e+08],
+       [1.00000000e+00, 2.52522000e+02, 6.24270000e+02, 6.21184000e+02,
+        6.37673605e+04, 1.57641909e+05, 1.56862626e+05, 3.89713033e+05,
+        3.87786536e+05, 3.85869562e+05, 1.61026614e+07, 3.98080501e+07,
+        3.96112641e+07, 9.84111145e+07, 9.79246316e+07, 9.74405535e+07,
+        2.43286155e+08, 2.42083501e+08, 2.40886791e+08, 2.39695998e+08],
+       [1.00000000e+00, 3.32608000e+02, 5.70309000e+02, 5.61070000e+02,
+        1.10628082e+05, 1.89689336e+05, 1.86616371e+05, 3.25252355e+05,
+        3.19983271e+05, 3.14799545e+05, 3.67957850e+07, 6.30921906e+07,
+        6.20700978e+07, 1.08181535e+08, 1.06428996e+08, 1.04704847e+08,
+        1.85494346e+08, 1.82489339e+08, 1.79533014e+08, 1.76624581e+08],
+       [1.00000000e+00, 8.03320000e+01, 4.87969000e+02, 7.10184000e+02,
+        6.45323022e+03, 3.91995257e+04, 5.70505011e+04, 2.38113745e+05,
+        3.46547776e+05, 5.04361314e+05, 5.18400890e+05, 3.14897630e+06,
+        4.58298085e+06, 1.91281534e+07, 2.78388760e+07, 4.05163531e+07,
+        1.16192126e+08, 1.69104572e+08, 2.46112686e+08, 3.58189335e+08],
+       [1.00000000e+00, 3.62441000e+02, 5.50813000e+02, 8.00493000e+02,
+        1.31363478e+05, 1.99637215e+05, 2.90131483e+05, 3.03394961e+05,
+        4.40921951e+05, 6.40789043e+05, 4.76115105e+07, 7.23567117e+07,
+        1.05155545e+08, 1.09962773e+08, 1.59808193e+08, 2.32248222e+08,
+        1.67113889e+08, 2.42865542e+08, 3.52954935e+08, 5.12947143e+08]])
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+
+<span class="n">lin_model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">lin_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>LinearRegression(copy_X=True, fit_intercept=True, n_jobs=None, normalize=False)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">polynomial_model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">polynomial_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_poly</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model coefficients = &quot;</span><span class="p">,</span> <span class="n">polynomial_model</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Constant term (bias) = &quot;</span><span class="p">,</span> <span class="n">polynomial_model</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Model coefficients =  [ 0.00000000e+00  8.44956564e+03 -7.03926860e+02  3.91781726e+03
+ -7.27929661e+00 -8.46412648e+00 -1.17297723e+01  1.85161715e+00
+  9.12487891e+00 -5.89023638e+00  7.03479781e-04 -1.54576830e-03
+  9.41465525e-03  9.78622737e-03  6.73304083e-02  6.58873295e-03
+ -5.15228130e-03  6.53665385e-03 -5.71172445e-03  4.06079530e-03]
+Constant term (bias) =  878612.6569970567
+</code></pre></div>
+<h2 id="53-test-the-model">5.3 Test the model<a class="headerlink" href="#53-test-the-model" title="Permanent link">&para;</a></h2>
+<p>We can apply this model to both the original traning data and to the test data:</p>
+<div class="highlight"><pre><span></span><code><span class="n">y_train_predicted</span> <span class="o">=</span> <span class="n">polynomial_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train_poly</span><span class="p">)</span>
+<span class="n">y_test_predict</span> <span class="o">=</span> <span class="n">polynomial_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">poly_features</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span>
+</code></pre></div>
+<p>Then measure the model quality for each case:</p>
+<div class="highlight"><pre><span></span><code><span class="n">rmse_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">Y_train</span><span class="p">,</span> <span class="n">y_train_predicted</span><span class="p">))</span>
+<span class="n">r2_train</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">Y_train</span><span class="p">,</span> <span class="n">y_train_predicted</span><span class="p">)</span>
+
+<span class="n">rmse_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">Y_test</span><span class="p">,</span><span class="n">y_test_predict</span><span class="p">))</span>
+<span class="n">r2_test</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">Y_test</span><span class="p">,</span> <span class="n">y_test_predict</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;R2:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Train = &quot;</span><span class="p">,</span> <span class="n">r2_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test = &quot;</span><span class="p">,</span> <span class="n">r2_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RMSE:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Train = &quot;</span><span class="p">,</span> <span class="n">rmse_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test = &quot;</span><span class="p">,</span> <span class="n">rmse_test</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>R2:
+Train =  0.9791796776657181
+Test =  0.9814345530715797
+RMSE:
+Train =  412795.4591276655
+Test =  393860.84246070404
+</code></pre></div>
+<p>Then we get the results of two regression evaluation indicators - <strong>mean square error root (RMSE)</strong> and <strong>R squared (R2)</strong>.</p>
+<h1 id="6-clustering-customers">6. Clustering Customers<a class="headerlink" href="#6-clustering-customers" title="Permanent link">&para;</a></h1>
+<h2 id="61-standardize-the-data-into-a-standard-size">6.1 Standardize the data into a standard size<a class="headerlink" href="#61-standardize-the-data-into-a-standard-size" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">perfume_preference</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Narcissus</th>
+      <th>Agrumen</th>
+      <th>Oud</th>
+      <th>Jasmine</th>
+      <th>Amber</th>
+      <th>Neroli</th>
+      <th>Indole</th>
+      <th>Vanilla</th>
+      <th>Frankincense</th>
+      <th>Bergamot</th>
+      <th>Galbanum</th>
+      <th>Magnolia</th>
+      <th>Sandalwood</th>
+      <th>Cashmeran</th>
+      <th>Citron</th>
+      <th>Opopanax</th>
+      <th>Aliphatic Aldehydes</th>
+      <th>Vetiver</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1353.0</td>
+      <td>1252.0</td>
+      <td>4066.0</td>
+      <td>3838.0</td>
+      <td>2144.0</td>
+      <td>4404.0</td>
+      <td>32082.0</td>
+      <td>3866.0</td>
+      <td>2505.0</td>
+      <td>3972.0</td>
+      <td>4485.0</td>
+      <td>6441.0</td>
+      <td>4106.0</td>
+      <td>1722.0</td>
+      <td>4287.0</td>
+      <td>4820.0</td>
+      <td>4140.0</td>
+      <td>1463.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1089.0</td>
+      <td>2152.0</td>
+      <td>4045.0</td>
+      <td>3710.0</td>
+      <td>2235.0</td>
+      <td>4352.0</td>
+      <td>30398.0</td>
+      <td>4769.0</td>
+      <td>2995.0</td>
+      <td>4720.0</td>
+      <td>4532.0</td>
+      <td>10931.0</td>
+      <td>3794.0</td>
+      <td>1638.0</td>
+      <td>4648.0</td>
+      <td>4472.0</td>
+      <td>4184.0</td>
+      <td>1071.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4177.0</td>
+      <td>3592.0</td>
+      <td>3596.0</td>
+      <td>1745.0</td>
+      <td>3234.0</td>
+      <td>2116.0</td>
+      <td>21678.0</td>
+      <td>4864.0</td>
+      <td>3178.0</td>
+      <td>3381.0</td>
+      <td>1376.0</td>
+      <td>18153.0</td>
+      <td>2502.0</td>
+      <td>1733.0</td>
+      <td>1747.0</td>
+      <td>2728.0</td>
+      <td>4580.0</td>
+      <td>4742.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4899.0</td>
+      <td>3738.0</td>
+      <td>2454.0</td>
+      <td>3976.0</td>
+      <td>4945.0</td>
+      <td>3853.0</td>
+      <td>17963.0</td>
+      <td>3040.0</td>
+      <td>2943.0</td>
+      <td>2870.0</td>
+      <td>4016.0</td>
+      <td>18819.0</td>
+      <td>1990.0</td>
+      <td>5118.0</td>
+      <td>2391.0</td>
+      <td>2012.0</td>
+      <td>3470.0</td>
+      <td>3057.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4822.0</td>
+      <td>4030.0</td>
+      <td>3447.0</td>
+      <td>4225.0</td>
+      <td>4078.0</td>
+      <td>3772.0</td>
+      <td>23988.0</td>
+      <td>3389.0</td>
+      <td>2415.0</td>
+      <td>2695.0</td>
+      <td>3887.0</td>
+      <td>20367.0</td>
+      <td>2118.0</td>
+      <td>4530.0</td>
+      <td>2427.0</td>
+      <td>3205.0</td>
+      <td>4319.0</td>
+      <td>2289.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2251.0</td>
+      <td>2305.0</td>
+      <td>4058.0</td>
+      <td>3330.0</td>
+      <td>1775.0</td>
+      <td>4882.0</td>
+      <td>16567.0</td>
+      <td>5148.0</td>
+      <td>4443.0</td>
+      <td>2472.0</td>
+      <td>2615.0</td>
+      <td>11655.0</td>
+      <td>3061.0</td>
+      <td>1549.0</td>
+      <td>1563.0</td>
+      <td>1709.0</td>
+      <td>3426.0</td>
+      <td>3003.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1661.0</td>
+      <td>2199.0</td>
+      <td>4994.0</td>
+      <td>2795.0</td>
+      <td>2231.0</td>
+      <td>4108.0</td>
+      <td>31511.0</td>
+      <td>3584.0</td>
+      <td>2771.0</td>
+      <td>4153.0</td>
+      <td>4462.0</td>
+      <td>11061.0</td>
+      <td>3791.0</td>
+      <td>2123.0</td>
+      <td>4528.0</td>
+      <td>4716.0</td>
+      <td>4124.0</td>
+      <td>2016.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>4690.0</td>
+      <td>3674.0</td>
+      <td>3827.0</td>
+      <td>2130.0</td>
+      <td>3483.0</td>
+      <td>2544.0</td>
+      <td>21010.0</td>
+      <td>4284.0</td>
+      <td>2457.0</td>
+      <td>3610.0</td>
+      <td>1819.0</td>
+      <td>18601.0</td>
+      <td>3917.0</td>
+      <td>2129.0</td>
+      <td>1609.0</td>
+      <td>2614.0</td>
+      <td>3879.0</td>
+      <td>3962.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>4735.0</td>
+      <td>3236.0</td>
+      <td>3255.0</td>
+      <td>3349.0</td>
+      <td>4221.0</td>
+      <td>4038.0</td>
+      <td>22356.0</td>
+      <td>3202.0</td>
+      <td>2804.0</td>
+      <td>2754.0</td>
+      <td>2968.0</td>
+      <td>16407.0</td>
+      <td>1899.0</td>
+      <td>4813.0</td>
+      <td>2878.0</td>
+      <td>2862.0</td>
+      <td>3125.0</td>
+      <td>2692.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1259.0</td>
+      <td>2679.0</td>
+      <td>3541.0</td>
+      <td>3159.0</td>
+      <td>1937.0</td>
+      <td>4619.0</td>
+      <td>31967.0</td>
+      <td>4662.0</td>
+      <td>2797.0</td>
+      <td>3840.0</td>
+      <td>5327.0</td>
+      <td>13610.0</td>
+      <td>3317.0</td>
+      <td>1889.0</td>
+      <td>4457.0</td>
+      <td>4795.0</td>
+      <td>4390.0</td>
+      <td>1690.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="n">standardized_customer_data</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">)</span>
+<span class="n">standardized_customer_data_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">standardized_customer_data</span><span class="p">,</span><span class="n">columns</span> <span class="o">=</span> <span class="n">perfume_preference</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="62-decide-the-number-of-clusters-elbow-method">6.2 Decide the number of clusters - Elbow method<a class="headerlink" href="#62-decide-the-number-of-clusters-elbow-method" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">sse</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
+    <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="n">k</span><span class="p">,)</span>
+    <span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">standardized_customer_data_df</span><span class="p">)</span>
+    <span class="n">sse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;K&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;SSE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">sse</span><span class="p">,</span><span class="s1">&#39;o-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="png" src="../output_56_0.png" /></p>
+<p>The 'elbow' value on the graph indicates the optimum number of clusters. The number of clusters here is 4.</p>
+<h2 id="63-cluster-the-data-build-the-model">6.3 Cluster the data (build the model)<a class="headerlink" href="#63-cluster-the-data-build-the-model" title="Permanent link">&para;</a></h2>
+<p>First we create the object('machine') that we will use to build the model.</p>
+<div class="highlight"><pre><span></span><code><span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+</code></pre></div>
+<p>Then we use that object to identify clusters in the data.</p>
+<div class="highlight"><pre><span></span><code><span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">standardized_customer_data_df</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>KMeans(algorithm=&#39;auto&#39;, copy_x=True, init=&#39;k-means++&#39;, max_iter=300,
+       n_clusters=4, n_init=10, n_jobs=None, precompute_distances=&#39;auto&#39;,
+       random_state=None, tol=0.0001, verbose=0)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">y_km</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">standardized_customer_data_df</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="64-reviw-the-results">6.4 Reviw the Results<a class="headerlink" href="#64-reviw-the-results" title="Permanent link">&para;</a></h2>
+<p>We want to know: for each group, how tightly clustered they are. That is, <strong>identify variances for each these groups</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">km0_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">km1_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">km2_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">km3_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variance of group 0 is </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">km0_var</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variance of group 1 is </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">km1_var</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variance of group 2 is </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">km2_var</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variance of group 3 is </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">km3_var</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Variance of group 0 is 0.188117
+Variance of group 1 is 0.187171
+Variance of group 2 is 0.190040
+Variance of group 3 is 0.184611
+</code></pre></div>
+<p>Group 1 is the tightest, whereas group 2 is rather loose.</p>
+<p>Specifically, for any customer group identified indicate the spread (variance) for each group for each dimension (quantity of scent chemical)：</p>
+<div class="highlight"><pre><span></span><code><span class="n">km0_che_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span> <span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variance for each dimension of group 0 is: &quot;</span><span class="p">)</span>
+<span class="n">km0_che_var</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Variance for each dimension of group 0 is:
+
+
+
+
+
+Narcissus              8.070874e+04
+Agrumen                1.860085e+05
+Oud                    1.247092e+05
+Jasmine                1.376372e+05
+Amber                  1.754141e+05
+Neroli                 9.981178e+04
+Indole                 1.814991e+06
+Vanilla                1.461047e+05
+Frankincense           4.453063e+04
+Bergamot               1.587021e+05
+Galbanum               5.220495e+04
+Magnolia               4.646825e+06
+Sandalwood             8.379077e+04
+Cashmeran              8.081125e+04
+Citron                 1.889976e+05
+Opopanax               7.244132e+04
+Aliphatic Aldehydes    1.835542e+05
+Vetiver                1.363927e+05
+dtype: float64
+</code></pre></div>
+<p>We can see that they are similar with regard to some chemicals but have a wide range of responses to other scent chemicals.</p>
+<p>The other three groups did much the same:</p>
+<div class="highlight"><pre><span></span><code><span class="n">km1_che_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span> <span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variance for each dimension of group 1 is: &quot;</span><span class="p">)</span>
+<span class="n">km1_che_var</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Variance for each dimension of group 1 is:
+
+
+
+
+
+Narcissus              1.041274e+05
+Agrumen                6.039455e+04
+Oud                    1.338378e+05
+Jasmine                1.140873e+05
+Amber                  1.361587e+05
+Neroli                 1.831613e+05
+Indole                 2.477114e+06
+Vanilla                9.723437e+04
+Frankincense           4.640931e+04
+Bergamot               5.826429e+04
+Galbanum               2.036101e+05
+Magnolia               1.511061e+06
+Sandalwood             4.278111e+04
+Cashmeran              1.827669e+05
+Citron                 8.646526e+04
+Opopanax               9.921890e+04
+Aliphatic Aldehydes    1.151117e+05
+Vetiver                1.233736e+05
+dtype: float64
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">km2_che_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span> <span class="mi">2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variance for each dimension of group 2 is: &quot;</span><span class="p">)</span>
+<span class="n">km2_che_var</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Variance for each dimension of group 2 is:
+
+
+
+
+
+Narcissus              9.723301e+04
+Agrumen                1.944770e+05
+Oud                    1.962811e+05
+Jasmine                1.289577e+05
+Amber                  6.918558e+04
+Neroli                 4.724214e+04
+Indole                 1.778136e+06
+Vanilla                1.525133e+05
+Frankincense           1.786047e+05
+Bergamot               7.893402e+04
+Galbanum               1.276341e+05
+Magnolia               4.858489e+06
+Sandalwood             6.911784e+04
+Cashmeran              6.365879e+04
+Citron                 4.415088e+04
+Opopanax               7.111018e+04
+Aliphatic Aldehydes    9.197844e+04
+Vetiver                1.581174e+05
+dtype: float64
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">km3_che_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span> <span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variance for each dimension of group 3 is: &quot;</span><span class="p">)</span>
+<span class="n">km3_che_var</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Variance for each dimension of group 3 is:
+
+
+
+
+
+Narcissus              1.219228e+05
+Agrumen                9.138574e+04
+Oud                    1.677518e+05
+Jasmine                5.476186e+04
+Amber                  5.526990e+04
+Neroli                 1.466144e+05
+Indole                 3.613530e+06
+Vanilla                1.238448e+05
+Frankincense           1.504654e+05
+Bergamot               4.178902e+04
+Galbanum               7.548093e+04
+Magnolia               2.287027e+06
+Sandalwood             1.405492e+05
+Cashmeran              1.905020e+05
+Citron                 1.384131e+05
+Opopanax               1.444139e+05
+Aliphatic Aldehydes    8.179831e+04
+Vetiver                1.320200e+05
+dtype: float64
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">y_km</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">20</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>[2 2 3 1 1 0 2 3 1 2 3 2 2 2 3 1 0 0 1 2]
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span> <span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>    Narcissus  Agrumen     Oud  Jasmine   Amber  Neroli   Indole  Vanilla  \
+0      1353.0   1252.0  4066.0   3838.0  2144.0  4404.0  32082.0   3866.0   
+1      1089.0   2152.0  4045.0   3710.0  2235.0  4352.0  30398.0   4769.0   
+6      1661.0   2199.0  4994.0   2795.0  2231.0  4108.0  31511.0   3584.0   
+9      1259.0   2679.0  3541.0   3159.0  1937.0  4619.0  31967.0   4662.0   
+11     1683.0   2078.0  3989.0   2873.0  2038.0  4309.0  30393.0   3648.0
+
+    Frankincense  Bergamot  Galbanum  Magnolia  Sandalwood  Cashmeran  Citron  \
+0         2505.0    3972.0    4485.0    6441.0      4106.0     1722.0  4287.0   
+1         2995.0    4720.0    4532.0   10931.0      3794.0     1638.0  4648.0   
+6         2771.0    4153.0    4462.0   11061.0      3791.0     2123.0  4528.0   
+9         2797.0    3840.0    5327.0   13610.0      3317.0     1889.0  4457.0   
+11        3011.0    4418.0    4092.0   10568.0      3768.0     1746.0  4483.0
+
+    Opopanax  Aliphatic Aldehydes  Vetiver  
+0     4820.0               4140.0   1463.0  
+1     4472.0               4184.0   1071.0  
+6     4716.0               4124.0   2016.0  
+9     4795.0               4390.0   1690.0  
+11    4495.0               4602.0   2307.0
+</code></pre></div>
+<p>We can look at the clusters in chart form.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#Jasmine vs Vanilla</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Jasmine&#39;</span><span class="p">],</span> <span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Vanilla&#39;</span><span class="p">],</span>
+           <span class="n">s</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Jasmine&#39;</span><span class="p">],</span> <span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span> <span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Vanilla&#39;</span><span class="p">],</span>
+           <span class="n">s</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;Jasmine&#39;</span><span class="p">],</span> <span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span> <span class="mi">2</span><span class="p">][</span><span class="s1">&#39;Vanilla&#39;</span><span class="p">],</span>
+           <span class="n">s</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">3</span><span class="p">][</span><span class="s1">&#39;Jasmine&#39;</span><span class="p">],</span> <span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span> <span class="mi">3</span><span class="p">][</span><span class="s1">&#39;Vanilla&#39;</span><span class="p">],</span>
+           <span class="n">s</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;cyan&#39;</span><span class="p">,</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.5</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>&lt;matplotlib.collections.PathCollection at 0x1a86c2add48&gt;
+</code></pre></div>
+<p><img alt="png" src="../output_74_1.png" /></p>
+<p>Take a '3D' view of the data</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">matplotlib</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span><span class="n">projection</span> <span class="o">=</span> <span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Jasmine&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Vanilla&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;Aliphatic Aldehydes&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Jasmine&#39;</span><span class="p">],</span> <span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Vanilla&#39;</span><span class="p">],</span>
+           <span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Aliphatic Aldehydes&#39;</span><span class="p">],</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Jasmine&#39;</span><span class="p">],</span> <span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span> <span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Vanilla&#39;</span><span class="p">],</span>
+           <span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Aliphatic Aldehydes&#39;</span><span class="p">],</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;Jasmine&#39;</span><span class="p">],</span> <span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span> <span class="mi">2</span><span class="p">][</span><span class="s1">&#39;Vanilla&#39;</span><span class="p">],</span>
+           <span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;Aliphatic Aldehydes&#39;</span><span class="p">],</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">3</span><span class="p">][</span><span class="s1">&#39;Jasmine&#39;</span><span class="p">],</span> <span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span> <span class="mi">3</span><span class="p">][</span><span class="s1">&#39;Vanilla&#39;</span><span class="p">],</span>
+           <span class="n">perfume_preference</span><span class="p">[</span><span class="n">y_km</span> <span class="o">==</span><span class="mi">3</span><span class="p">][</span><span class="s1">&#39;Aliphatic Aldehydes&#39;</span><span class="p">],</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;cyan&#39;</span><span class="p">,</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">.3</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Using matplotlib backend: Qt5Agg
+
+
+
+
+
+&lt;mpl_toolkits.mplot3d.art3d.Path3DCollection at 0x1a872c3bc88&gt;
+</code></pre></div>
+<p><img alt="png" src="../output_77_2.png" /></p>
+<p>The central point of K-means:</p>
+<div class="highlight"><pre><span></span><code><span class="n">centers</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span>
+<span class="n">centers</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>array([[-0.63508675, -0.41641312,  0.1801924 ,  0.10214018, -0.71073531,
+         0.92559669, -0.91458644,  0.69966415,  1.49956699, -0.59666119,
+        -0.60720389, -0.41660319,  0.57117372, -0.48341316, -0.74077772,
+        -0.91436421, -0.42815036,  0.10413989],
+       [ 1.01512708,  0.75401605, -1.09476607,  1.04776978,  1.37499078,
+         0.14680867, -0.54262287, -1.52078422, -0.61896137, -1.13774394,
+         0.62329158,  0.75422437, -1.61128735,  1.66687438, -0.18799296,
+        -0.54276709, -0.53338134, -0.30061661],
+       [-1.2345529 , -1.27841445,  0.84571864,  0.21695373, -1.00251791,
+         0.4677676 ,  1.5634698 ,  0.12346678, -0.43796367,  1.19821614,
+         1.18028798, -1.27839257,  0.56702368, -0.50325856,  1.59486712,
+         1.56359936,  0.82022759, -1.19924176],
+       [ 0.90638695,  0.99381461,  0.04883221, -1.40107939,  0.37454187,
+        -1.59030928, -0.13842807,  0.70373206, -0.45305188,  0.52350583,
+        -1.24439817,  0.99377463,  0.46500412, -0.67859451, -0.71193968,
+        -0.13864473,  0.12810446,  1.45221773]])
+</code></pre></div>
+<p>We can visualize these arrays:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="kn">import</span> <span class="n">figure</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.90638695</span><span class="p">,</span>  <span class="mf">0.99381461</span><span class="p">,</span>  <span class="mf">0.04883221</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.40107939</span><span class="p">,</span>  <span class="mf">0.37454187</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">1.59030928</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.13842807</span><span class="p">,</span>  <span class="mf">0.70373206</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.45305188</span><span class="p">,</span>  <span class="mf">0.52350583</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">1.24439817</span><span class="p">,</span>  <span class="mf">0.99377463</span><span class="p">,</span>  <span class="mf">0.46500412</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.67859451</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.71193968</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">0.13864473</span><span class="p">,</span>  <span class="mf">0.12810446</span><span class="p">,</span>  <span class="mf">1.45221773</span><span class="p">],</span>
+       <span class="p">[</span><span class="o">-</span><span class="mf">1.2345529</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.27841445</span><span class="p">,</span>  <span class="mf">0.84571864</span><span class="p">,</span>  <span class="mf">0.21695373</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.00251791</span><span class="p">,</span>
+         <span class="mf">0.4677676</span> <span class="p">,</span>  <span class="mf">1.5634698</span> <span class="p">,</span>  <span class="mf">0.12346678</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.43796367</span><span class="p">,</span>  <span class="mf">1.19821614</span><span class="p">,</span>
+         <span class="mf">1.18028798</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.27839257</span><span class="p">,</span>  <span class="mf">0.56702368</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.50325856</span><span class="p">,</span>  <span class="mf">1.59486712</span><span class="p">,</span>
+         <span class="mf">1.56359936</span><span class="p">,</span>  <span class="mf">0.82022759</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.19924176</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">1.01512708</span><span class="p">,</span>  <span class="mf">0.75401605</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.09476607</span><span class="p">,</span>  <span class="mf">1.04776978</span><span class="p">,</span>  <span class="mf">1.37499078</span><span class="p">,</span>
+         <span class="mf">0.14680867</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.54262287</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.52078422</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.61896137</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.13774394</span><span class="p">,</span>
+         <span class="mf">0.62329158</span><span class="p">,</span>  <span class="mf">0.75422437</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.61128735</span><span class="p">,</span>  <span class="mf">1.66687438</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.18799296</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">0.54276709</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.53338134</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.30061661</span><span class="p">],</span>
+       <span class="p">[</span><span class="o">-</span><span class="mf">0.63508675</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.41641312</span><span class="p">,</span>  <span class="mf">0.1801924</span> <span class="p">,</span>  <span class="mf">0.10214018</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.71073531</span><span class="p">,</span>
+         <span class="mf">0.92559669</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.91458644</span><span class="p">,</span>  <span class="mf">0.69966415</span><span class="p">,</span>  <span class="mf">1.49956699</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.59666119</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">0.60720389</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.41660319</span><span class="p">,</span>  <span class="mf">0.57117372</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.48341316</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.74077772</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">0.91436421</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.42815036</span><span class="p">,</span>  <span class="mf">0.10413989</span><span class="p">]])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Plotting Central Points&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Features&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Preference&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">array</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="p">),</span> <span class="n">color</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Array #</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="s2">&quot;center left&quot;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">17</span><span class="p">],[</span><span class="sa">r</span><span class="s1">&#39;$Narcissus$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Agrumen$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Oud$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Jasmine$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Amber$&#39;</span><span class="p">,</span> 
+                                                          <span class="sa">r</span><span class="s1">&#39;$Neroli$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Indole$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Vanilla$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Frankincen$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Bergamot$&#39;</span><span class="p">,</span> 
+                                                          <span class="sa">r</span><span class="s1">&#39;$Galbanum$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Magnolia$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Sandalwood$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Cashmeran$&#39;</span><span class="p">,</span> 
+                                                          <span class="sa">r</span><span class="s1">&#39;$Citron$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Opopanax$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Aliphatic Aldehydes$&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$Vetiver$&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="png" src="../output_82_0.png" /></p>
+<p>We define that if the coefficient is positive, then the feature is preferred by group customers.</p>
+<p><strong>Best mixture for each group:</strong></p>
+<ul>
+<li>Group 0: Narcissus, Agrumen, Oud, Amber, Vanilla, Bergamot, Magnolia, Sandalwood, Aliphatic Aldehydes, Vetiver</li>
+<li>Group 1: Oud, Jasmine, Neroli, Indole, Vanilla, Bergamot, Galbanum, Sandalwood, Citron, Opopanax, Aliphatic Aldehydes</li>
+<li>Group 2: Narcissus, Agrumen, Jasmine, Amber, Neroli, Galbanum, Magnolia, Cashmeran</li>
+<li>Group 3: Oud, Jasmine, Neroli, Vanilla, Frankincen, Sandalwood, Vetiver</li>
+</ul>
+<div class="highlight"><pre><span></span><code>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Jingxuan Wang
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.indexes", "navigation.expand", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../../../../mkdocs/javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

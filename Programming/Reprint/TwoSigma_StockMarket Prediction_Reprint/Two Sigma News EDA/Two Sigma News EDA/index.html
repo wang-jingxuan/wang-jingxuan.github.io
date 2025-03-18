@@ -1,0 +1,3527 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Jingxuan Wang">
+      
+      
+        <meta name="author" content="Jingxuan Wang">
+      
+      
+        <link rel="canonical" href="https://wang-jingxuan.github.io/Programming/Reprint/TwoSigma_StockMarket%20Prediction_Reprint/Two%20Sigma%20News%20EDA/Two%20Sigma%20News%20EDA/">
+      
+      
+        <link rel="prev" href="../../Two%20Sigma%20Market%20EDA/Two%20Sigma%20Market%20EDA/">
+      
+      
+        <link rel="next" href="../../Two%20sigma%20Merging%20and%20Data%20prepocessing/">
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>News EDA - Jingxuan Wang</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../mkdocs/css/no-footer.css">
+    
+      <link rel="stylesheet" href="../../../../../mkdocs/css/unordered-list-symbols.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lets-change-the-datatype-of-variables-to-make-them-more-functionable-and-reduce-the-memory-usage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="Jingxuan Wang" class="md-header__button md-logo" aria-label="Jingxuan Wang" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jingxuan Wang
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              News EDA
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="amber" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wang-jingxuan/wang-jingxuan.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    wang-jingxuan.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../CV/" class="md-tabs__link">
+        
+  
+    
+  
+  CV
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../../" class="md-tabs__link">
+          
+  
+    
+  
+  Programming
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../AboutMe/" class="md-tabs__link">
+        
+  
+    
+  
+  About Me
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Jingxuan Wang" class="md-nav__button md-logo" aria-label="Jingxuan Wang" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Jingxuan Wang
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wang-jingxuan/wang-jingxuan.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    wang-jingxuan.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../CV/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CV
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Programming
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Programming
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../MachineLearning/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Machine Learning
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Machine Learning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../MachineLearning/Perfume_Grouping/Perfume_Grouping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Clustering Data
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../MachineLearning/pytorch_logistic_regerssion/pytorch_logistic_regerssion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logistic Regression
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../MachineLearning/pytorch_DNN/pytorch_DNN/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deep Neural Networks (DNN)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../MachineLearning/pytorch_convolutional_neural_network%28CNN%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Convolutional Neural Network (CNN)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../MachineLearning/mnist_image_classification_DNN/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Image Classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../MachineLearning/pytorch_SVM_algorithm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SVM Algorithm
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Reprint - Two Sigma Stock Market Prediction
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Reprint - Two Sigma Stock Market Prediction
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Two%20Sigma%20Market%20EDA/Two%20Sigma%20Market%20EDA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Market EDA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    News EDA
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    News EDA
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lets-change-the-datatype-of-variables-to-make-them-more-functionable-and-reduce-the-memory-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Let's change the datatype of variables to make them more functionable and reduce the memory usage.
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Two%20sigma%20Merging%20and%20Data%20prepocessing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Merging and Data preprocessing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Two%20Sigma%20Modeling/Two%20Sigma%20Modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modeling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../AboutMe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About Me
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lets-change-the-datatype-of-variables-to-make-them-more-functionable-and-reduce-the-memory-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Let's change the datatype of variables to make them more functionable and reduce the memory usage.
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/wang-jingxuan/wang-jingxuan.github.io/edit/main/docs/Programming/Reprint/TwoSigma_StockMarket Prediction_Reprint/Two Sigma News EDA/Two Sigma News EDA.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+  <h1>News EDA</h1>
+
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;newsdata.csv&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>time</th>
+      <th>sourceTimestamp</th>
+      <th>firstCreated</th>
+      <th>sourceId</th>
+      <th>headline</th>
+      <th>urgency</th>
+      <th>takeSequence</th>
+      <th>provider</th>
+      <th>subjects</th>
+      <th>...</th>
+      <th>noveltyCount12H</th>
+      <th>noveltyCount24H</th>
+      <th>noveltyCount3D</th>
+      <th>noveltyCount5D</th>
+      <th>noveltyCount7D</th>
+      <th>volumeCounts12H</th>
+      <th>volumeCounts24H</th>
+      <th>volumeCounts3D</th>
+      <th>volumeCounts5D</th>
+      <th>volumeCounts7D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>2007-01-01 04:29:32+00:00</td>
+      <td>2007-01-01 04:29:32+00:00</td>
+      <td>2007-01-01 04:29:32+00:00</td>
+      <td>e58c6279551b85cf</td>
+      <td>China's Daqing pumps 43.41 mln tonnes of oil i...</td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'ENR', 'ASIA', 'CN', 'NGS', 'EMRG', 'RTRS', '...</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>6</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>2007-01-01 07:03:35+00:00</td>
+      <td>2007-01-01 07:03:34+00:00</td>
+      <td>2007-01-01 07:03:34+00:00</td>
+      <td>5a31c4327427f63f</td>
+      <td>FEATURE-In kidnapping, finesse works best</td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'FEA', 'CA', 'LATAM', 'MX', 'INS', 'ASIA', 'I...</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>2007-01-01 11:29:56+00:00</td>
+      <td>2007-01-01 11:29:56+00:00</td>
+      <td>2007-01-01 11:29:56+00:00</td>
+      <td>1cefd27a40fabdfe</td>
+      <td>PRESS DIGEST - Wall Street Journal - Jan 1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'RET', 'ENR', 'ID', 'BG', 'US', 'PRESS', 'IQ'...</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5</td>
+      <td>11</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2007-01-01 12:08:37+00:00</td>
+      <td>2007-01-01 12:08:37+00:00</td>
+      <td>2007-01-01 12:08:37+00:00</td>
+      <td>23768af19dc69992</td>
+      <td>PRESS DIGEST - New York Times - Jan 1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'FUND', 'FIN', 'CA', 'SFWR', 'INS', 'PUB', 'B...</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5</td>
+      <td>13</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>2007-01-01 12:08:37+00:00</td>
+      <td>2007-01-01 12:08:37+00:00</td>
+      <td>2007-01-01 12:08:37+00:00</td>
+      <td>23768af19dc69992</td>
+      <td>PRESS DIGEST - New York Times - Jan 1</td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'FUND', 'FIN', 'CA', 'SFWR', 'INS', 'PUB', 'B...</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 36 columns</p>
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">=</span><span class="n">news_data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">shape</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>(9328750, 35)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>time                          0
+sourceTimestamp               0
+firstCreated                  0
+sourceId                      0
+headline                  73960
+urgency                       0
+takeSequence                  0
+provider                      0
+subjects                      0
+audiences                     0
+bodySize                      0
+companyCount                  0
+headlineTag             6341993
+marketCommentary              0
+sentenceCount                 0
+wordCount                     0
+assetCodes                    0
+assetName                     0
+firstMentionSentence          0
+relevance                     0
+sentimentClass                0
+sentimentNegative             0
+sentimentNeutral              0
+sentimentPositive             0
+sentimentWordCount            0
+noveltyCount12H               0
+noveltyCount24H               0
+noveltyCount3D                0
+noveltyCount5D                0
+noveltyCount7D                0
+volumeCounts12H               0
+volumeCounts24H               0
+volumeCounts3D                0
+volumeCounts5D                0
+volumeCounts7D                0
+dtype: int64
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>time                    5245343
+sourceTimestamp         5228340
+firstCreated            3441535
+sourceId                6340206
+headline                5532378
+urgency                       3
+takeSequence                 97
+provider                     30
+subjects                1733963
+audiences                 88488
+bodySize                  61200
+companyCount                 43
+headlineTag                 162
+marketCommentary              2
+sentenceCount               669
+wordCount                 10365
+assetCodes                10691
+assetName                  8902
+firstMentionSentence        516
+relevance                 28412
+sentimentClass                3
+sentimentNegative       1321080
+sentimentNeutral         582507
+sentimentPositive       1025372
+sentimentWordCount         6493
+noveltyCount12H             501
+noveltyCount24H             501
+noveltyCount3D              501
+noveltyCount5D              501
+noveltyCount7D              501
+volumeCounts12H            2565
+volumeCounts24H            2570
+volumeCounts3D             2587
+volumeCounts5D             2598
+volumeCounts7D             2928
+dtype: int64
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 9328750 entries, 0 to 9328749
+Data columns (total 35 columns):
+time                    object
+sourceTimestamp         object
+firstCreated            object
+sourceId                object
+headline                object
+urgency                 int64
+takeSequence            int64
+provider                object
+subjects                object
+audiences               object
+bodySize                int64
+companyCount            int64
+headlineTag             object
+marketCommentary        bool
+sentenceCount           int64
+wordCount               int64
+assetCodes              object
+assetName               object
+firstMentionSentence    int64
+relevance               float64
+sentimentClass          int64
+sentimentNegative       float64
+sentimentNeutral        float64
+sentimentPositive       float64
+sentimentWordCount      int64
+noveltyCount12H         int64
+noveltyCount24H         int64
+noveltyCount3D          int64
+noveltyCount5D          int64
+noveltyCount7D          int64
+volumeCounts12H         int64
+volumeCounts24H         int64
+volumeCounts3D          int64
+volumeCounts5D          int64
+volumeCounts7D          int64
+dtypes: bool(1), float64(4), int64(19), object(11)
+memory usage: 2.4+ GB
+</code></pre></div>
+<h3 id="lets-change-the-datatype-of-variables-to-make-them-more-functionable-and-reduce-the-memory-usage">Let's change the datatype of variables to make them more functionable and reduce the memory usage.<a class="headerlink" href="#lets-change-the-datatype-of-variables-to-make-them-more-functionable-and-reduce-the-memory-usage" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">columnname</span> <span class="ow">in</span> <span class="n">news_data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">news_data</span><span class="p">[</span><span class="n">columnname</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">==</span><span class="s1">&#39;float64&#39;</span><span class="p">:</span>
+        <span class="n">news_data</span><span class="p">[</span><span class="n">columnname</span><span class="p">]</span><span class="o">=</span><span class="n">news_data</span><span class="p">[</span><span class="n">columnname</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">news_data</span><span class="p">[</span><span class="n">columnname</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">==</span><span class="s1">&#39;int64&#39;</span><span class="p">:</span>
+        <span class="n">news_data</span><span class="p">[</span><span class="n">columnname</span><span class="p">]</span><span class="o">=</span><span class="n">news_data</span><span class="p">[</span><span class="n">columnname</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int32&#39;</span><span class="p">)</span>
+<span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;urgency&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;urgency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int8&#39;</span><span class="p">)</span>
+<span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;provider&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;provider&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+<span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;subjects&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;subjects&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+<span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;audiences&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;audiences&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S+00:00&#39;</span><span class="p">)</span>
+<span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;sourceTimestamp&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;sourceTimestamp&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S+00:00&#39;</span><span class="p">)</span>
+<span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;firstCreated&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;firstCreated&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S+00:00&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 9328750 entries, 0 to 9328749
+Data columns (total 35 columns):
+time                    datetime64[ns]
+sourceTimestamp         datetime64[ns]
+firstCreated            datetime64[ns]
+sourceId                object
+headline                object
+urgency                 int8
+takeSequence            int32
+provider                category
+subjects                category
+audiences               category
+bodySize                int32
+companyCount            int32
+headlineTag             object
+marketCommentary        bool
+sentenceCount           int32
+wordCount               int32
+assetCodes              object
+assetName               object
+firstMentionSentence    int32
+relevance               float32
+sentimentClass          int32
+sentimentNegative       float32
+sentimentNeutral        float32
+sentimentPositive       float32
+sentimentWordCount      int32
+noveltyCount12H         int32
+noveltyCount24H         int32
+noveltyCount3D          int32
+noveltyCount5D          int32
+noveltyCount7D          int32
+volumeCounts12H         int32
+volumeCounts24H         int32
+volumeCounts3D          int32
+volumeCounts5D          int32
+volumeCounts7D          int32
+dtypes: bool(1), category(3), datetime64[ns](3), float32(4), int32(18), int8(1), object(5)
+memory usage: 1.5+ GB
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">=</span><span class="n">news_data</span><span class="p">[</span><span class="n">news_data</span><span class="o">.</span><span class="n">time</span><span class="o">&gt;</span><span class="n">datetime</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2009</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>C:\Users\chinn\Anaconda3\lib\site-packages\ipykernel_launcher.py:1: FutureWarning: Comparing Series of datetimes with &#39;datetime.date&#39;.  Currently, the
+&#39;datetime.date&#39; is coerced to a datetime. In the future pandas will
+not coerce, and a TypeError will be raised. To retain the current
+behavior, convert the &#39;datetime.date&#39; to a datetime with
+&#39;pd.Timestamp&#39;.
+  &quot;&quot;&quot;Entry point for launching an IPython kernel.
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="mi">100</span><span class="o">-</span><span class="n">news_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">100</span><span class="o">/</span><span class="mi">9328750</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>16.306514806378132
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>sourceTimestamp</th>
+      <th>firstCreated</th>
+      <th>sourceId</th>
+      <th>headline</th>
+      <th>urgency</th>
+      <th>takeSequence</th>
+      <th>provider</th>
+      <th>subjects</th>
+      <th>audiences</th>
+      <th>...</th>
+      <th>noveltyCount12H</th>
+      <th>noveltyCount24H</th>
+      <th>noveltyCount3D</th>
+      <th>noveltyCount5D</th>
+      <th>noveltyCount7D</th>
+      <th>volumeCounts12H</th>
+      <th>volumeCounts24H</th>
+      <th>volumeCounts3D</th>
+      <th>volumeCounts5D</th>
+      <th>volumeCounts7D</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1521194</th>
+      <td>2009-01-01 00:25:02</td>
+      <td>2009-01-01 00:25:01</td>
+      <td>2009-01-01 00:25:01</td>
+      <td>6bf957cb4d7b0ce1</td>
+      <td>Churchill Downs Incorporated, KHBPA, KTA Reach...</td>
+      <td>3</td>
+      <td>1</td>
+      <td>BSW</td>
+      <td>{'ENTS', 'EQUE', 'CYCS', 'NEWR', 'LEI', 'RELX'...</td>
+      <td>{'BSW', 'CNR'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1521195</th>
+      <td>2009-01-01 00:25:03</td>
+      <td>2009-01-01 00:25:01</td>
+      <td>2009-01-01 00:25:01</td>
+      <td>aceb69df2660a6f5</td>
+      <td>Corgi International Limited Announces Financia...</td>
+      <td>3</td>
+      <td>1</td>
+      <td>BSW</td>
+      <td>{'CYCP', 'RET', 'CYCS', 'ASIA', 'HK', 'NEWR', ...</td>
+      <td>{'BSW', 'CNR', 'CNRA'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>2 rows × 35 columns</p>
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;urgency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>3    6162567
+1    3166158
+2         25
+Name: urgency, dtype: int64
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">headline</span><span class="p">[</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;urgency&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>array([&quot;INDIA&#39;S HERO HONDA &lt;HROH.BO&gt; DEC VEHICLE SALES 252,462  UNITS VS 245,104 YEAR AGO &quot;],
+      dtype=object)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">headline</span><span class="p">[</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;urgency&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>array([&#39;BRIEF-Terrapin 3 Acquisition Corporation to buy Yatra Online, Inc.&lt;TRTL.O&gt;&#39;],
+      dtype=object)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">headline</span><span class="p">[</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;urgency&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>array([&quot;China&#39;s Daqing pumps 43.41 mln tonnes of oil in 06&quot;], dtype=object)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">assetCodes</span><span class="p">[</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;urgency&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>array([&quot;{&#39;0857.HK&#39;, &#39;0857.F&#39;, &#39;0857.DE&#39;, &#39;PTR.N&#39;}&quot;], dtype=object)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">takeSequence</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[:</span><span class="mi">10</span><span class="p">]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>1     6747890
+2      831166
+3      465806
+4      310821
+5      222402
+6      163805
+7      124725
+8       96287
+9       74009
+10      56180
+Name: takeSequence, dtype: int64
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[[</span><span class="s1">&#39;sentimentClass&#39;</span><span class="p">,</span><span class="s1">&#39;sentimentNegative&#39;</span><span class="p">,</span> <span class="s1">&#39;sentimentNeutral&#39;</span><span class="p">,</span><span class="s1">&#39;sentimentPositive&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sentimentClass</th>
+      <th>sentimentNegative</th>
+      <th>sentimentNeutral</th>
+      <th>sentimentPositive</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-1</td>
+      <td>0.500739</td>
+      <td>0.419327</td>
+      <td>0.079934</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-1</td>
+      <td>0.600082</td>
+      <td>0.345853</td>
+      <td>0.054064</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1</td>
+      <td>0.450049</td>
+      <td>0.295671</td>
+      <td>0.254280</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1</td>
+      <td>0.752917</td>
+      <td>0.162715</td>
+      <td>0.084368</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-1</td>
+      <td>0.699274</td>
+      <td>0.209360</td>
+      <td>0.091366</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="highlight"><pre><span></span><code>    <span class="c1"># Barplot on negative, neutral and positive columns.</span>
+<span class="n">news_data</span><span class="p">[[</span><span class="s1">&#39;sentimentNegative&#39;</span><span class="p">,</span> <span class="s1">&#39;sentimentNeutral&#39;</span><span class="p">,</span><span class="s1">&#39;sentimentPositive&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;News positivity chart&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="png" src="../output_22_0.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;delay_time&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;firstCreated&#39;</span><span class="p">]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_vs_time</span><span class="p">(</span><span class="n">data_frame</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">calculation</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="n">span</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">calculation</span> <span class="o">==</span> <span class="s1">&#39;mean&#39;</span><span class="p">:</span>
+        <span class="n">group_temp</span> <span class="o">=</span> <span class="n">data_frame</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">calculation</span> <span class="o">==</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span>
+        <span class="n">group_temp</span> <span class="o">=</span> <span class="n">data_frame</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">calculation</span> <span class="o">==</span> <span class="s1">&#39;nunique&#39;</span><span class="p">:</span>
+        <span class="n">group_temp</span> <span class="o">=</span> <span class="n">data_frame</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">group_temp</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">],</span> <span class="n">group_temp</span><span class="p">[</span><span class="n">column</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">column</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> versus time&#39;</span> <span class="o">%</span><span class="n">column</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">plot_vs_time</span><span class="p">(</span><span class="n">news_data</span><span class="p">,</span> <span class="s1">&#39;sourceId&#39;</span><span class="p">,</span> <span class="n">calculation</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">span</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;News count vs time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Count&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Text(0, 0.5, &#39;Count&#39;)
+</code></pre></div>
+<p><img alt="png" src="../output_26_1.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="n">provider_count</span> <span class="o">=</span> <span class="n">news_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;provider&#39;</span><span class="p">)[</span><span class="s1">&#39;sourceId&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">provider_sort</span> <span class="o">=</span> <span class="n">provider_count</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">provider_sort</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">barh</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Count&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Provider&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Top 10 news provider&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+<span class="k">del</span> <span class="n">provider_count</span>
+</code></pre></div>
+<p><img alt="png" src="../output_28_0.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="n">sentimentWordRatio</span> <span class="o">=</span> <span class="n">news_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;sentimentWordCount&#39;</span><span class="p">)[</span><span class="s1">&#39;relevance&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sentimentWordRatio</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2000</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Relevance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sentiment word count&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sentiment word count and relevance&#39;</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">sentimentWordRatio</span>
+</code></pre></div>
+<p><img alt="png" src="../output_29_0.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;negative&#39;</span><span class="p">,</span> <span class="s1">&#39;neutral&#39;</span><span class="p">,</span> <span class="s1">&#39;positive&#39;</span><span class="p">]):</span>
+    <span class="n">df_sentiment</span> <span class="o">=</span> <span class="n">news_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;sentimentClass&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">,</span> <span class="s1">&#39;assetName&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Top mentioned companies for </span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s1"> sentiment are:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df_sentiment</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Top mentioned companies for negative sentiment are:
+JPMorgan Chase &amp; Co        24262
+Apple Inc                  24148
+Bank of America Corp       23007
+Citigroup Inc              22421
+Goldman Sachs Group Inc    20570
+Name: assetName, dtype: int64
+
+Top mentioned companies for neutral sentiment are:
+HSBC Holdings PLC    20799
+Barclays PLC         15133
+Deutsche Bank AG     14840
+Credit Suisse AG     14632
+Apple Inc            11921
+Name: assetName, dtype: int64
+
+Top mentioned companies for positive sentiment are:
+Apple Inc                20533
+Barclays PLC             19561
+General Electric Co      16555
+Royal Dutch Shell PLC    16369
+Boeing Co                15289
+Name: assetName, dtype: int64
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;headline&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;headline&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;headline&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>77.71627344075407
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;headline&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>272
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;headline&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>0
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="n">news_data</span><span class="o">.</span><span class="n">headline</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>sourceTimestamp</th>
+      <th>firstCreated</th>
+      <th>sourceId</th>
+      <th>headline</th>
+      <th>urgency</th>
+      <th>takeSequence</th>
+      <th>provider</th>
+      <th>subjects</th>
+      <th>audiences</th>
+      <th>...</th>
+      <th>noveltyCount24H</th>
+      <th>noveltyCount3D</th>
+      <th>noveltyCount5D</th>
+      <th>noveltyCount7D</th>
+      <th>volumeCounts12H</th>
+      <th>volumeCounts24H</th>
+      <th>volumeCounts3D</th>
+      <th>volumeCounts5D</th>
+      <th>volumeCounts7D</th>
+      <th>delay_time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1521402</th>
+      <td>2009-01-02 11:11:26</td>
+      <td>2009-01-02 11:11:26</td>
+      <td>2009-01-02 11:10:18</td>
+      <td>f704b7195d2630f4</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'FINS', 'US', 'BNK', 'RTRS', 'BSVC', 'RCH', '...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:01:08</td>
+    </tr>
+    <tr>
+      <th>1521447</th>
+      <td>2009-01-02 12:29:28</td>
+      <td>2009-01-02 12:29:28</td>
+      <td>2009-01-02 12:29:11</td>
+      <td>a2b08707144a2e70</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'CHEM', 'BMAT', 'US', 'COMC', 'CHE', 'RCH', '...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>56</td>
+      <td>176</td>
+      <td>176</td>
+      <td>00:00:17</td>
+    </tr>
+    <tr>
+      <th>1521462</th>
+      <td>2009-01-02 12:53:00</td>
+      <td>2009-01-02 12:53:00</td>
+      <td>2009-01-02 12:50:38</td>
+      <td>905209eb39d3b19c</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'EUROPE', 'ELC', 'WEU', 'TECH', 'US', 'SEMI',...</td>
+      <td>{'UKI', 'PSC', 'U', 'NAW', 'E'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>00:02:22</td>
+    </tr>
+    <tr>
+      <th>1521463</th>
+      <td>2009-01-02 12:53:00</td>
+      <td>2009-01-02 12:53:00</td>
+      <td>2009-01-02 12:50:38</td>
+      <td>905209eb39d3b19c</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'EUROPE', 'ELC', 'WEU', 'TECH', 'US', 'SEMI',...</td>
+      <td>{'UKI', 'PSC', 'U', 'NAW', 'E'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:02:22</td>
+    </tr>
+    <tr>
+      <th>1521601</th>
+      <td>2009-01-02 14:36:07</td>
+      <td>2009-01-02 14:36:07</td>
+      <td>2009-01-02 14:35:38</td>
+      <td>a5db1545921197df</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'SWIT', 'US', 'TECH', 'SOFW', 'RTRS', 'RCH', ...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:00:29</td>
+    </tr>
+    <tr>
+      <th>1521602</th>
+      <td>2009-01-02 14:38:22</td>
+      <td>2009-01-02 14:38:22</td>
+      <td>2009-01-02 14:37:48</td>
+      <td>7ca50e16d4a0ca9a</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'CMSS', 'MAC', 'INDS', 'US', 'ENVS', 'ISER', ...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>00:00:34</td>
+    </tr>
+    <tr>
+      <th>1522405</th>
+      <td>2009-01-05 06:17:11</td>
+      <td>2009-01-05 06:17:11</td>
+      <td>2009-01-05 06:16:54</td>
+      <td>c0ae3e6cd77ab29e</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'EUROPE', 'WEU', 'CH', 'FINS', 'INVS', 'BNK',...</td>
+      <td>{'E', 'PSC'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>20</td>
+      <td>36</td>
+      <td>00:00:17</td>
+    </tr>
+    <tr>
+      <th>1522480</th>
+      <td>2009-01-05 08:33:19</td>
+      <td>2009-01-05 08:33:19</td>
+      <td>2009-01-05 08:09:04</td>
+      <td>15202c85fcd07c00</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'EUROPE', 'GB', 'MEMI', 'WEU', 'BMAT', 'MINE'...</td>
+      <td>{'UKI', 'E', 'PSC'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>6</td>
+      <td>22</td>
+      <td>00:24:15</td>
+    </tr>
+    <tr>
+      <th>1522491</th>
+      <td>2009-01-05 09:08:24</td>
+      <td>2009-01-05 09:08:24</td>
+      <td>2009-01-05 09:07:58</td>
+      <td>2e2ec98f85fe15e2</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'EUROPE', 'WEU', 'FINS', 'BNK', 'RTRS', 'BSVC...</td>
+      <td>{'UKI', 'E', 'PSC', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>8</td>
+      <td>14</td>
+      <td>28</td>
+      <td>39</td>
+      <td>00:00:26</td>
+    </tr>
+    <tr>
+      <th>1522619</th>
+      <td>2009-01-05 11:28:38</td>
+      <td>2009-01-05 11:28:38</td>
+      <td>2009-01-05 11:28:08</td>
+      <td>47506cf9f09aebd4</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'FINS', 'US', 'BNK', 'RTRS', 'BSVC', 'RCH', '...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>8</td>
+      <td>8</td>
+      <td>10</td>
+      <td>00:00:30</td>
+    </tr>
+    <tr>
+      <th>1522620</th>
+      <td>2009-01-05 11:28:53</td>
+      <td>2009-01-05 11:28:53</td>
+      <td>2009-01-05 10:55:18</td>
+      <td>da281f1d5d756c9f</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'WLES', 'US', 'TCOM', 'TEL', 'RTRS', 'RCH', '...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>00:33:35</td>
+    </tr>
+    <tr>
+      <th>1522621</th>
+      <td>2009-01-05 11:29:08</td>
+      <td>2009-01-05 11:29:08</td>
+      <td>2009-01-05 11:25:09</td>
+      <td>e52777aa6e613cb0</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'PHAD', 'HECA', 'US', 'CHE', 'RCH', 'RTRS', '...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:03:59</td>
+    </tr>
+    <tr>
+      <th>1522622</th>
+      <td>2009-01-05 11:29:23</td>
+      <td>2009-01-05 11:29:23</td>
+      <td>2009-01-05 11:25:53</td>
+      <td>f068551abd8b14c5</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'MACH', 'INDS', 'INDG', 'APL', 'US', 'RTRS', ...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:03:30</td>
+    </tr>
+    <tr>
+      <th>1522623</th>
+      <td>2009-01-05 11:29:36</td>
+      <td>2009-01-05 11:29:36</td>
+      <td>2009-01-05 11:26:32</td>
+      <td>8696504dd5f62925</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'CMSS', 'BUS', 'BSUP', 'INDS', 'US', 'ISER', ...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:03:04</td>
+    </tr>
+    <tr>
+      <th>1522654</th>
+      <td>2009-01-05 11:48:37</td>
+      <td>2009-01-05 11:48:37</td>
+      <td>2009-01-05 11:48:21</td>
+      <td>6fd2d146ece5f914</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'BIOT', 'HECA', 'DRU', 'US', 'RTRS', 'RCH', '...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:00:16</td>
+    </tr>
+    <tr>
+      <th>1522657</th>
+      <td>2009-01-05 11:58:00</td>
+      <td>2009-01-05 11:58:00</td>
+      <td>2009-01-05 11:56:22</td>
+      <td>e21d042a26117ecf</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'SPEC', 'CHEM', 'BMAT', 'US', 'CHE', 'RCH', '...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:01:38</td>
+    </tr>
+    <tr>
+      <th>1522775</th>
+      <td>2009-01-05 12:26:27</td>
+      <td>2009-01-05 12:26:27</td>
+      <td>2009-01-05 12:22:32</td>
+      <td>ca9c0f30a00488b0</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'BIOT', 'HECA', 'DRU', 'US', 'CHE', 'RCH', 'R...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:03:55</td>
+    </tr>
+    <tr>
+      <th>1522785</th>
+      <td>2009-01-05 12:31:35</td>
+      <td>2009-01-05 12:31:35</td>
+      <td>2009-01-05 12:30:22</td>
+      <td>fdca736d395e2267</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'ENT', 'PHON', 'WLES', 'US', 'TCOM', 'TEL', '...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>00:01:13</td>
+    </tr>
+    <tr>
+      <th>1522786</th>
+      <td>2009-01-05 12:31:35</td>
+      <td>2009-01-05 12:31:35</td>
+      <td>2009-01-05 12:30:22</td>
+      <td>fdca736d395e2267</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'ENT', 'PHON', 'WLES', 'US', 'TCOM', 'TEL', '...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>19</td>
+      <td>31</td>
+      <td>00:01:13</td>
+    </tr>
+    <tr>
+      <th>1522902</th>
+      <td>2009-01-05 13:08:52</td>
+      <td>2009-01-05 13:08:52</td>
+      <td>2009-01-05 13:08:36</td>
+      <td>9176994e470abcd4</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'SWIT', 'ITSE', 'BUS', 'US', 'TECH', 'RTRS', ...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2</td>
+      <td>00:00:16</td>
+    </tr>
+    <tr>
+      <th>1522903</th>
+      <td>2009-01-05 13:09:34</td>
+      <td>2009-01-05 13:09:34</td>
+      <td>2009-01-05 13:08:46</td>
+      <td>16f5391544a74d3f</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'LEN', 'TECH', 'US', 'SEMI', 'CHPT', 'RTRS', ...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:00:48</td>
+    </tr>
+    <tr>
+      <th>1522904</th>
+      <td>2009-01-05 13:09:44</td>
+      <td>2009-01-05 13:09:44</td>
+      <td>2009-01-05 13:08:26</td>
+      <td>3c711535ae44784c</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'LEN', 'TECH', 'US', 'SEMI', 'CHPT', 'RTRS', ...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:01:18</td>
+    </tr>
+    <tr>
+      <th>1522906</th>
+      <td>2009-01-05 13:11:27</td>
+      <td>2009-01-05 13:11:27</td>
+      <td>2009-01-05 13:06:29</td>
+      <td>475b7ebf1dcb330a</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'FIN', 'INVT', 'FINS', 'US', 'RTRS', 'RCH', '...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>16</td>
+      <td>16</td>
+      <td>00:04:58</td>
+    </tr>
+    <tr>
+      <th>1522910</th>
+      <td>2009-01-05 13:13:47</td>
+      <td>2009-01-05 13:13:47</td>
+      <td>2009-01-05 13:08:03</td>
+      <td>a4043c683b6ed121</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'FOOD', 'FOBE', 'BEV', 'FOD', 'US', 'RTRS', '...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:05:44</td>
+    </tr>
+    <tr>
+      <th>1522915</th>
+      <td>2009-01-05 13:20:43</td>
+      <td>2009-01-05 13:20:43</td>
+      <td>2009-01-05 13:20:18</td>
+      <td>419634edaaf034bc</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'SWIT', 'BUS', 'US', 'TECH', 'SOFW', 'RTRS', ...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>4</td>
+      <td>4</td>
+      <td>00:00:25</td>
+    </tr>
+    <tr>
+      <th>1522916</th>
+      <td>2009-01-05 13:20:55</td>
+      <td>2009-01-05 13:20:55</td>
+      <td>2009-01-05 13:19:18</td>
+      <td>5dcec274008b4723</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'HECA', 'DRU', 'PHAG', 'US', 'RTRS', 'RCH', '...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:01:37</td>
+    </tr>
+    <tr>
+      <th>1522925</th>
+      <td>2009-01-05 13:25:54</td>
+      <td>2009-01-05 13:25:54</td>
+      <td>2009-01-05 13:25:10</td>
+      <td>a1e9e0e197098aef</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'RET', 'CYCS', 'SHOP', 'US', 'DEPT', 'RTRS', ...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>00:00:44</td>
+    </tr>
+    <tr>
+      <th>1522926</th>
+      <td>2009-01-05 13:26:33</td>
+      <td>2009-01-05 13:26:33</td>
+      <td>2009-01-05 13:26:18</td>
+      <td>f067c0bdca248b4a</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'RETE', 'RET', 'CYCS', 'SHOP', 'US', 'RTRS', ...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:00:15</td>
+    </tr>
+    <tr>
+      <th>1522959</th>
+      <td>2009-01-05 13:31:19</td>
+      <td>2009-01-05 13:31:19</td>
+      <td>2009-01-05 13:27:45</td>
+      <td>f02704fe2c2e805b</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'FUND', 'MTG', 'BANK', 'DBT', 'RESF', 'BACT',...</td>
+      <td>{'T', 'PSC', 'U', 'D', 'M', 'NAW', 'E', 'NAT'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>10</td>
+      <td>10</td>
+      <td>14</td>
+      <td>58</td>
+      <td>67</td>
+      <td>00:03:34</td>
+    </tr>
+    <tr>
+      <th>1523020</th>
+      <td>2009-01-05 13:38:53</td>
+      <td>2009-01-05 13:38:53</td>
+      <td>2009-01-05 13:38:26</td>
+      <td>1d012ec7114973bb</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'RET', 'RETS', 'CYCS', 'SHOP', 'US', 'RTRS', ...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>10</td>
+      <td>10</td>
+      <td>11</td>
+      <td>00:00:27</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>6053506</th>
+      <td>2013-10-23 16:23:49</td>
+      <td>2013-10-23 16:23:48</td>
+      <td>2013-10-23 16:23:48</td>
+      <td>0b0f170e7621edd0</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'LEN', 'FINS', 'US', 'BNK', 'CMPNY', 'AMERS',...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:00:01</td>
+    </tr>
+    <tr>
+      <th>6076071</th>
+      <td>2013-10-29 21:58:10</td>
+      <td>2013-10-29 21:58:09</td>
+      <td>2013-10-29 21:58:09</td>
+      <td>7150eb23d9d0c955</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'RET', 'CYCS', 'RETA', 'SHOP', 'US', 'RSPC', ...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>00:00:01</td>
+    </tr>
+    <tr>
+      <th>6076081</th>
+      <td>2013-10-29 21:59:06</td>
+      <td>2013-10-29 21:59:06</td>
+      <td>2013-10-29 21:59:06</td>
+      <td>d6e7741677893d7c</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'HPRD', 'HECA', 'HLTH', 'US', 'CMPNY', 'AMED'...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6076206</th>
+      <td>2013-10-29 22:32:52</td>
+      <td>2013-10-29 22:32:52</td>
+      <td>2013-10-29 22:32:52</td>
+      <td>ef38f016d04280f1</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'RET', 'CYCS', 'RGEN', 'SHOP', 'US', 'DEPT', ...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5</td>
+      <td>5</td>
+      <td>13</td>
+      <td>21</td>
+      <td>23</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6086754</th>
+      <td>2013-10-31 19:00:50</td>
+      <td>2013-10-31 19:00:50</td>
+      <td>2013-10-31 19:00:50</td>
+      <td>8ac30d9256e5c9a9</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'US', 'AMERS', 'LEN'}</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>4</td>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+      <td>3</td>
+      <td>7</td>
+      <td>13</td>
+      <td>14</td>
+      <td>17</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6147648</th>
+      <td>2013-11-19 03:00:00</td>
+      <td>2013-11-19 03:00:00</td>
+      <td>2013-11-19 03:00:00</td>
+      <td>574cba1408fba1a1</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'CYCP', 'CYCS', 'HBLD', 'BLD', 'US', 'CONS', ...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>37</td>
+      <td>37</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6155144</th>
+      <td>2013-11-21 03:00:00</td>
+      <td>2013-11-21 03:00:00</td>
+      <td>2013-11-21 03:00:00</td>
+      <td>17e644fa418bc053</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'LEN', 'FINS', 'COFS', 'US', 'CMPNY', 'BNK', ...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>11</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6161193</th>
+      <td>2013-11-22 16:34:47</td>
+      <td>2013-11-22 16:34:47</td>
+      <td>2013-11-22 16:34:47</td>
+      <td>1e7fe1b2d97a6bc5</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'CYCP', 'CYCS', 'HBLD', 'BLD', 'US', 'CONS', ...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>3</td>
+      <td>0</td>
+      <td>2</td>
+      <td>4</td>
+      <td>9</td>
+      <td>12</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6162343</th>
+      <td>2013-11-23 03:00:00</td>
+      <td>2013-11-23 03:00:00</td>
+      <td>2013-11-23 03:00:00</td>
+      <td>075905b30ad8de69</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'CYCS', 'US', 'ADVT', 'CMPNY', 'MDIA', 'CCOS'...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>4</td>
+      <td>4</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6162345</th>
+      <td>2013-11-23 03:00:00</td>
+      <td>2013-11-23 03:00:00</td>
+      <td>2013-11-23 03:00:00</td>
+      <td>d4317379cfaf8855</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'SWIT', 'ITSE', 'OFCE', 'COMP', 'TECH', 'US',...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>6</td>
+      <td>6</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6172086</th>
+      <td>2013-11-28 03:00:00</td>
+      <td>2013-11-28 03:00:00</td>
+      <td>2013-11-28 03:00:00</td>
+      <td>1f04e8520c872acf</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'COMP', 'TECH', 'US', 'CMPNY', 'TEEQ', 'AMERS...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>5</td>
+      <td>40</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6174051</th>
+      <td>2013-11-29 18:00:00</td>
+      <td>2013-11-29 18:00:00</td>
+      <td>2013-11-29 18:00:00</td>
+      <td>bdf1e56e37848a92</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'TRAN', 'SHP', 'INDS', 'US', 'SHIP', 'CMPNY',...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8</td>
+      <td>8</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6176722</th>
+      <td>2013-12-02 16:26:54</td>
+      <td>2013-12-02 16:26:53</td>
+      <td>2013-12-02 16:26:53</td>
+      <td>4ebdd3421cebf68c</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'CYCS', 'US', 'ADVT', 'CMPNY', 'MDIA', 'CCOS'...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5</td>
+      <td>5</td>
+      <td>00:00:01</td>
+    </tr>
+    <tr>
+      <th>6176727</th>
+      <td>2013-12-02 16:27:58</td>
+      <td>2013-12-02 16:27:58</td>
+      <td>2013-12-02 16:27:58</td>
+      <td>47162aed09e8a7ba</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'COMP', 'TECH', 'US', 'CMPNY', 'TEEQ', 'AMERS...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>6</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6176949</th>
+      <td>2013-12-02 17:40:40</td>
+      <td>2013-12-02 17:40:40</td>
+      <td>2013-12-02 17:40:40</td>
+      <td>b63075dbf8bb4965</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'ENTS', 'RORA', 'TRAN', 'CYCS', 'INDS', 'LEI'...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>6</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6177589</th>
+      <td>2013-12-02 21:05:06</td>
+      <td>2013-12-02 21:05:05</td>
+      <td>2013-12-02 21:05:05</td>
+      <td>81ebd3761914804c</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'HECA', 'PHMR', 'MRCH', 'DRU', 'US', 'CMPNY',...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>00:00:01</td>
+    </tr>
+    <tr>
+      <th>6185072</th>
+      <td>2013-12-04 18:18:11</td>
+      <td>2013-12-04 18:18:11</td>
+      <td>2013-12-04 18:18:11</td>
+      <td>ebeb9de2a1b6d774</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'FIN', 'WLES', 'FINS', 'US', 'TCOM', 'CMPNY',...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6206146</th>
+      <td>2013-12-12 17:28:23</td>
+      <td>2013-12-12 17:28:23</td>
+      <td>2013-12-12 17:28:23</td>
+      <td>17350a38692ccab6</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'HECA', 'PHMR', 'MRCH', 'DRU', 'INDS', 'US', ...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6218155</th>
+      <td>2013-12-17 23:22:56</td>
+      <td>2013-12-17 23:22:56</td>
+      <td>2013-12-17 23:22:56</td>
+      <td>5476f3c69374adee</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'MACH', 'MIN', 'ELCO', 'BMAT', 'INDS', 'INDG'...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>3</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6218343</th>
+      <td>2013-12-18 03:00:00</td>
+      <td>2013-12-18 03:00:00</td>
+      <td>2013-12-18 03:00:00</td>
+      <td>6a24362c5897933e</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'MACH', 'MIN', 'ELCO', 'BMAT', 'INDS', 'INDG'...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>5</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6228369</th>
+      <td>2013-12-20 18:20:02</td>
+      <td>2013-12-20 18:20:02</td>
+      <td>2013-12-20 18:20:02</td>
+      <td>bbe40e19969a0a85</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'OILG', 'ENR', 'OGTR', 'ENER', 'US', 'ELG', '...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>9</td>
+      <td>12</td>
+      <td>12</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6232636</th>
+      <td>2013-12-24 17:02:16</td>
+      <td>2013-12-24 17:02:16</td>
+      <td>2013-12-24 17:02:16</td>
+      <td>f2c906e76c605240</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'CMSS', 'CYCS', 'BUS', 'BSUP', 'INDS', 'US', ...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6232637</th>
+      <td>2013-12-24 17:02:16</td>
+      <td>2013-12-24 17:02:16</td>
+      <td>2013-12-24 17:02:16</td>
+      <td>f2c906e76c605240</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'CMSS', 'CYCS', 'BUS', 'BSUP', 'INDS', 'US', ...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5</td>
+      <td>12</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6232771</th>
+      <td>2013-12-24 20:24:53</td>
+      <td>2013-12-24 20:24:53</td>
+      <td>2013-12-24 20:24:53</td>
+      <td>6d5044b14207ed0b</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'CHEM', 'HECA', 'PHMR', 'MRCH', 'BMAT', 'DRU'...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6232778</th>
+      <td>2013-12-24 20:30:02</td>
+      <td>2013-12-24 20:30:02</td>
+      <td>2013-12-24 20:30:02</td>
+      <td>d80acc871f6ef6cf</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'AUTO', 'CYCS', 'US', 'AUT', 'CMPNY', 'CARM',...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>2</td>
+      <td>4</td>
+      <td>5</td>
+      <td>8</td>
+      <td>11</td>
+      <td>30</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6249966</th>
+      <td>2014-01-08 12:00:02</td>
+      <td>2014-01-08 12:00:01</td>
+      <td>2014-01-08 12:00:01</td>
+      <td>2c23550af6de94ef</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'CMSS', 'BUS', 'INVT', 'BSUP', 'INDS', 'FINS'...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>00:00:01</td>
+    </tr>
+    <tr>
+      <th>6251660</th>
+      <td>2014-01-08 16:35:28</td>
+      <td>2014-01-08 16:35:28</td>
+      <td>2014-01-08 16:35:28</td>
+      <td>b8619613aecff939</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'SWIT', 'ITSE', 'TECH', 'US', 'CMPNY', 'AMERS...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6281987</th>
+      <td>2014-01-17 18:33:26</td>
+      <td>2014-01-17 18:33:25</td>
+      <td>2014-01-17 18:33:25</td>
+      <td>872e13f65f358130</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'MACH', 'STEE', 'MIN', 'BMAT', 'INDS', 'INDG'...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>5</td>
+      <td>6</td>
+      <td>00:00:01</td>
+    </tr>
+    <tr>
+      <th>6283977</th>
+      <td>2014-01-20 15:51:35</td>
+      <td>2014-01-20 15:51:35</td>
+      <td>2014-01-20 15:51:35</td>
+      <td>14ba0663fd91df60</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'MEDQ', 'HPRD', 'INS', 'HECA', 'INSR', 'PHMR'...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>9</td>
+      <td>00:00:00</td>
+    </tr>
+    <tr>
+      <th>6291391</th>
+      <td>2014-01-22 18:30:00</td>
+      <td>2014-01-22 18:30:00</td>
+      <td>2014-01-22 18:30:00</td>
+      <td>ca018b238c26789a</td>
+      <td></td>
+      <td>3</td>
+      <td>1</td>
+      <td>MKW</td>
+      <td>{'LEN', 'FINS', 'US', 'BNK', 'CMPNY', 'AMERS',...</td>
+      <td>{'CNR', 'MKW'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>00:00:00</td>
+    </tr>
+  </tbody>
+</table>
+<p>37530 rows × 36 columns</p>
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="n">news_data</span><span class="o">.</span><span class="n">headline</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span><span class="o">==</span><span class="mi">272</span><span class="p">]</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>sourceTimestamp</th>
+      <th>firstCreated</th>
+      <th>sourceId</th>
+      <th>headline</th>
+      <th>urgency</th>
+      <th>takeSequence</th>
+      <th>provider</th>
+      <th>subjects</th>
+      <th>audiences</th>
+      <th>...</th>
+      <th>noveltyCount24H</th>
+      <th>noveltyCount3D</th>
+      <th>noveltyCount5D</th>
+      <th>noveltyCount7D</th>
+      <th>volumeCounts12H</th>
+      <th>volumeCounts24H</th>
+      <th>volumeCounts3D</th>
+      <th>volumeCounts5D</th>
+      <th>volumeCounts7D</th>
+      <th>delay_time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3086030</th>
+      <td>2010-10-27 15:48:01</td>
+      <td>2010-10-27 15:48:01</td>
+      <td>2010-10-27 15:48:01</td>
+      <td>3511350c6faaed0a</td>
+      <td>PRESS RELEASE - CHICAGO-BASED \\"JAM THEATRICA...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'RORA', 'TRAN', 'RRLF', 'INDS', 'US', 'RTRS',...</td>
+      <td>{'E', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>7</td>
+      <td>7</td>
+      <td>7</td>
+      <td>7</td>
+      <td>0 days</td>
+    </tr>
+    <tr>
+      <th>3086404</th>
+      <td>2010-10-27 17:59:00</td>
+      <td>2010-10-27 17:59:00</td>
+      <td>2010-10-27 17:59:00</td>
+      <td>d19099a829f8c69d</td>
+      <td>PRESS RELEASE - CHICAGO-BASED \\"JAM THEATRICA...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'RORA', 'TRAN', 'RRLF', 'INDS', 'US', 'RTRS',...</td>
+      <td>{'E', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>8</td>
+      <td>8</td>
+      <td>8</td>
+      <td>8</td>
+      <td>8</td>
+      <td>0 days</td>
+    </tr>
+  </tbody>
+</table>
+<p>2 rows × 36 columns</p>
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">news_data</span><span class="o">.</span><span class="n">headline</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">len</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>C:\Users\chinn\Anaconda3\lib\site-packages\scipy\stats\stats.py:1713: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+  return np.add.reduce(sorted[indexer] * weights, axis=axis) / sumval
+
+
+
+
+
+&lt;matplotlib.axes._subplots.AxesSubplot at 0x2190e9a45c0&gt;
+</code></pre></div>
+<p><img alt="png" src="../output_37_2.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">bodySize</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>0
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">bodySize</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>122770
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">news_data</span><span class="o">.</span><span class="n">bodySize</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>KeyboardInterrupt
+</code></pre></div>
+<p><img alt="png" src="../output_40_1.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="n">news_data</span><span class="o">.</span><span class="n">companyCount</span><span class="o">==</span><span class="n">news_data</span><span class="o">.</span><span class="n">companyCount</span><span class="o">.</span><span class="n">max</span><span class="p">()]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>sourceTimestamp</th>
+      <th>firstCreated</th>
+      <th>sourceId</th>
+      <th>headline</th>
+      <th>urgency</th>
+      <th>takeSequence</th>
+      <th>provider</th>
+      <th>subjects</th>
+      <th>audiences</th>
+      <th>...</th>
+      <th>noveltyCount24H</th>
+      <th>noveltyCount3D</th>
+      <th>noveltyCount5D</th>
+      <th>noveltyCount7D</th>
+      <th>volumeCounts12H</th>
+      <th>volumeCounts24H</th>
+      <th>volumeCounts3D</th>
+      <th>volumeCounts5D</th>
+      <th>volumeCounts7D</th>
+      <th>delay_time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5951141</th>
+      <td>2013-09-12</td>
+      <td>2013-09-12 10:13:18</td>
+      <td>2013-09-12 10:13:18</td>
+      <td>d6de134f025a1ace</td>
+      <td>U.S. RESEARCH ROUNDUP: MasterCard, Morgan Stan...</td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'BLR', 'PPRO', 'INVB', 'FOBE', 'RUBB', 'HECA'...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>4</td>
+      <td>00:00:01</td>
+    </tr>
+    <tr>
+      <th>5951142</th>
+      <td>2013-09-12</td>
+      <td>2013-09-12 10:13:18</td>
+      <td>2013-09-12 10:13:18</td>
+      <td>d6de134f025a1ace</td>
+      <td>U.S. RESEARCH ROUNDUP: MasterCard, Morgan Stan...</td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'BLR', 'PPRO', 'INVB', 'FOBE', 'RUBB', 'HECA'...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>19</td>
+      <td>19</td>
+      <td>26</td>
+      <td>26</td>
+      <td>26</td>
+      <td>00:00:01</td>
+    </tr>
+    <tr>
+      <th>5951143</th>
+      <td>2013-09-12</td>
+      <td>2013-09-12 10:13:18</td>
+      <td>2013-09-12 10:13:18</td>
+      <td>d6de134f025a1ace</td>
+      <td>U.S. RESEARCH ROUNDUP: MasterCard, Morgan Stan...</td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'BLR', 'PPRO', 'INVB', 'FOBE', 'RUBB', 'HECA'...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>3</td>
+      <td>10</td>
+      <td>10</td>
+      <td>10</td>
+      <td>00:00:01</td>
+    </tr>
+    <tr>
+      <th>5951144</th>
+      <td>2013-09-12</td>
+      <td>2013-09-12 10:13:18</td>
+      <td>2013-09-12 10:13:18</td>
+      <td>d6de134f025a1ace</td>
+      <td>U.S. RESEARCH ROUNDUP: MasterCard, Morgan Stan...</td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'BLR', 'PPRO', 'INVB', 'FOBE', 'RUBB', 'HECA'...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>00:00:01</td>
+    </tr>
+    <tr>
+      <th>5951145</th>
+      <td>2013-09-12</td>
+      <td>2013-09-12 10:13:18</td>
+      <td>2013-09-12 10:13:18</td>
+      <td>d6de134f025a1ace</td>
+      <td>U.S. RESEARCH ROUNDUP: MasterCard, Morgan Stan...</td>
+      <td>3</td>
+      <td>1</td>
+      <td>RTRS</td>
+      <td>{'BLR', 'PPRO', 'INVB', 'FOBE', 'RUBB', 'HECA'...</td>
+      <td>{'E', 'PSC', 'NAW', 'U'}</td>
+      <td>...</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+      <td>7</td>
+      <td>23</td>
+      <td>23</td>
+      <td>24</td>
+      <td>00:00:01</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 36 columns</p>
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;subjects&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>1521194    {&#39;ENTS&#39;, &#39;EQUE&#39;, &#39;CYCS&#39;, &#39;NEWR&#39;, &#39;LEI&#39;, &#39;RELX&#39;...
+1521195    {&#39;CYCP&#39;, &#39;RET&#39;, &#39;CYCS&#39;, &#39;ASIA&#39;, &#39;HK&#39;, &#39;NEWR&#39;, ...
+1521196    {&#39;COEN&#39;, &#39;INDS&#39;, &#39;SG&#39;, &#39;RTRS&#39;, &#39;EMRG&#39;, &#39;AUTO&#39;,...
+1521197    {&#39;COEN&#39;, &#39;INDS&#39;, &#39;SG&#39;, &#39;RTRS&#39;, &#39;EMRG&#39;, &#39;AUTO&#39;,...
+1521198    {&#39;FUND&#39;, &#39;AUTO&#39;, &#39;CYCS&#39;, &#39;DBT&#39;, &#39;NEWS&#39;, &#39;WASH&#39;...
+Name: subjects, dtype: category
+Categories (1733963, object): [{&#39;AAA&#39;, &#39;ABS&#39;, &#39;BANK&#39;, &#39;DBT&#39;, &#39;CEEU&#39;, &#39;WEU&#39;, &#39;..., {&#39;AAA&#39;, &#39;ABS&#39;, &#39;DBT&#39;, &#39;CEEU&#39;, &#39;WEU&#39;, &#39;CH&#39;, &#39;LE..., {&#39;AAA&#39;, &#39;ABS&#39;, &#39;DBT&#39;, &#39;DE&#39;, &#39;CEEU&#39;, &#39;WEU&#39;, &#39;CD..., {&#39;AAA&#39;, &#39;AFR&#39;, &#39;DBT&#39;, &#39;WEU&#39;, &#39;ZA&#39;, &#39;IGD&#39;, &#39;LEN..., ..., {&#39;ZNC&#39;, &#39;MEMI&#39;, &#39;ASIA&#39;, &#39;BASMTL&#39;, &#39;MIN&#39;, &#39;COM&#39;..., {&#39;ZNC&#39;, &#39;MEMI&#39;, &#39;AU&#39;, &#39;ASIA&#39;, &#39;COM&#39;, &#39;BASMTL&#39;,..., {&#39;ZNC&#39;, &#39;MEMI&#39;, &#39;AU&#39;, &#39;ASIA&#39;, &#39;COM&#39;, &#39;BASMTL&#39;,..., {&#39;ZNC&#39;, &#39;RTRS&#39;, &#39;MCE&#39;, &#39;ASIA&#39;, &#39;COM&#39;, &#39;BASMTL&#39;...]
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;subjects&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;subjects&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;subjects&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;subjects&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">columns_corr</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;urgency&#39;</span><span class="p">,</span> <span class="s1">&#39;takeSequence&#39;</span><span class="p">,</span> <span class="s1">&#39;companyCount&#39;</span><span class="p">,</span><span class="s1">&#39;marketCommentary&#39;</span><span class="p">,</span><span class="s1">&#39;sentenceCount&#39;</span><span class="p">,</span>\
+           <span class="s1">&#39;firstMentionSentence&#39;</span><span class="p">,</span><span class="s1">&#39;relevance&#39;</span><span class="p">,</span><span class="s1">&#39;sentimentClass&#39;</span><span class="p">,</span><span class="s1">&#39;sentimentWordCount&#39;</span><span class="p">,</span><span class="s1">&#39;noveltyCount24H&#39;</span><span class="p">,</span>\
+           <span class="s1">&#39;noveltyCount3D&#39;</span><span class="p">,</span> <span class="s1">&#39;noveltyCount5D&#39;</span><span class="p">,</span> <span class="s1">&#39;noveltyCount7D&#39;</span><span class="p">,</span><span class="s1">&#39;volumeCounts24H&#39;</span><span class="p">,</span><span class="s1">&#39;volumeCounts3D&#39;</span><span class="p">,</span><span class="s1">&#39;volumeCounts5D&#39;</span><span class="p">,</span><span class="s1">&#39;volumeCounts7D&#39;</span><span class="p">]</span>
+<span class="n">colormap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdBu</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">news_data</span><span class="p">[</span><span class="n">columns_corr</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">1.</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">colormap</span><span class="p">,</span> <span class="n">linecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Pair-wise correlation&#39;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Text(0.5, 1.0, &#39;Pair-wise correlation&#39;)
+</code></pre></div>
+<p><img alt="png" src="../output_45_1.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;headlinelength&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">news_data</span><span class="p">[</span><span class="s1">&#39;headline&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">dropfeatures</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sourceTimestamp&#39;</span><span class="p">,</span><span class="s1">&#39;firstCreated&#39;</span><span class="p">,</span><span class="s1">&#39;sourceId&#39;</span><span class="p">,</span><span class="s1">&#39;headline&#39;</span><span class="p">,</span><span class="s1">&#39;takeSequence&#39;</span><span class="p">,</span><span class="s1">&#39;provider&#39;</span><span class="p">,</span><span class="s1">&#39;subjects&#39;</span><span class="p">,</span><span class="s1">&#39;audiences&#39;</span><span class="p">,</span><span class="s1">&#39;headlineTag&#39;</span><span class="p">,</span><span class="s1">&#39;volumeCounts7D&#39;</span><span class="p">,</span><span class="s1">&#39;volumeCounts5D&#39;</span><span class="p">,</span><span class="s1">&#39;volumeCounts24H&#39;</span><span class="p">,</span><span class="s1">&#39;noveltyCount7D&#39;</span><span class="p">,</span><span class="s1">&#39;noveltyCount5D&#39;</span><span class="p">,</span><span class="s1">&#39;noveltyCount24H&#39;</span><span class="p">]</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">dropfeatures</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">news_data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;newsdatapreprocessed.csv&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Jingxuan Wang
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.indexes", "navigation.expand", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../../../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../../../../../mkdocs/javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

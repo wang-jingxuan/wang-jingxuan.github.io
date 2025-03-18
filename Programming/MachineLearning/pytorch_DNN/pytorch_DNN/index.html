@@ -1,0 +1,2743 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Jingxuan Wang">
+      
+      
+        <meta name="author" content="Jingxuan Wang">
+      
+      
+        <link rel="canonical" href="https://wang-jingxuan.github.io/Programming/MachineLearning/pytorch_DNN/pytorch_DNN/">
+      
+      
+        <link rel="prev" href="../../pytorch_logistic_regerssion/pytorch_logistic_regerssion/">
+      
+      
+        <link rel="next" href="../../pytorch_convolutional_neural_network%28CNN%29/">
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
+    
+    
+      
+        <title>Deep Neural Networks (DNN) - Jingxuan Wang</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.4af4bdda.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../mkdocs/css/no-footer.css">
+    
+      <link rel="stylesheet" href="../../../../mkdocs/css/unordered-list-symbols.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pytourch-deep-neuron-network" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="Jingxuan Wang" class="md-header__button md-logo" aria-label="Jingxuan Wang" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Jingxuan Wang
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deep Neural Networks (DNN)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="amber" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="amber" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/wang-jingxuan/wang-jingxuan.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    wang-jingxuan.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../CV/" class="md-tabs__link">
+        
+  
+    
+  
+  CV
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../" class="md-tabs__link">
+          
+  
+    
+  
+  Programming
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../AboutMe/" class="md-tabs__link">
+        
+  
+    
+  
+  About Me
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Jingxuan Wang" class="md-nav__button md-logo" aria-label="Jingxuan Wang" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Jingxuan Wang
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/wang-jingxuan/wang-jingxuan.github.io" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    wang-jingxuan.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../CV/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CV
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Programming
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Programming
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Machine Learning
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Machine Learning
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Perfume_Grouping/Perfume_Grouping/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Clustering Data
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pytorch_logistic_regerssion/pytorch_logistic_regerssion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logistic Regression
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Deep Neural Networks (DNN)
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Deep Neural Networks (DNN)
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-fire-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Fire up
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-data-generating" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Data generating
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-model-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Model training
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-visualization-of-the-cross-entropy-loss-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Visualization of the Cross Entropy Loss Function
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pytorch_convolutional_neural_network%28CNN%29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Convolutional Neural Network (CNN)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mnist_image_classification_DNN/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Image Classification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pytorch_SVM_algorithm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SVM Algorithm
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_3" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../Reprint/TwoSigma_StockMarket%20Prediction_Reprint/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Reprint - Two Sigma Stock Market Prediction
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Reprint - Two Sigma Stock Market Prediction
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Reprint/TwoSigma_StockMarket%20Prediction_Reprint/Two%20Sigma%20Market%20EDA/Two%20Sigma%20Market%20EDA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Market EDA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Reprint/TwoSigma_StockMarket%20Prediction_Reprint/Two%20Sigma%20News%20EDA/Two%20Sigma%20News%20EDA/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    News EDA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Reprint/TwoSigma_StockMarket%20Prediction_Reprint/Two%20sigma%20Merging%20and%20Data%20prepocessing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Merging and Data preprocessing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Reprint/TwoSigma_StockMarket%20Prediction_Reprint/Two%20Sigma%20Modeling/Two%20Sigma%20Modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modeling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../AboutMe/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About Me
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-fire-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Fire up
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-data-generating" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Data generating
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-model-training" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Model training
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-visualization-of-the-cross-entropy-loss-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Visualization of the Cross Entropy Loss Function
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/wang-jingxuan/wang-jingxuan.github.io/edit/main/docs/Programming/MachineLearning/pytorch_DNN/pytorch_DNN.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="pytourch-deep-neuron-network">Pytourch Deep Neuron Network<a class="headerlink" href="#pytourch-deep-neuron-network" title="Permanent link">&para;</a></h1>
+<h2 id="1-fire-up">1. Fire up<a class="headerlink" href="#1-fire-up" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.autograd</span><span class="w"> </span><span class="kn">import</span> <span class="n">Variable</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span> 
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span>
+</code></pre></div>
+<h2 id="2-data-generating">2. Data generating<a class="headerlink" href="#2-data-generating" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">x1_Pos</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">x2_Pos</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">y_Pos</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">-</span> <span class="mf">2.0</span>
+    <span class="n">y_Pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">x1_Pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">x2_Pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">4.0</span> <span class="o">-</span> <span class="n">temp</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span> <span class="p">(</span> <span class="p">))</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x2_Pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">4.0</span> <span class="o">-</span> <span class="n">temp</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span> <span class="p">()</span> <span class="p">)</span>
+</code></pre></div>
+<p>这段代码生成了一个包含1000个数据点的数据集，其中每个数据点有三个特征：<code>x1_Pos</code>，<code>x2_Pos</code>和<code>y_Pos</code>。</p>
+<ul>
+<li>对于每个数据点，首先生成一个在区间[-2.0, 2.0]上均匀分布的随机数<code>temp</code>。</li>
+<li>对于<code>y_Pos</code>特征，将其设置为常数1，表示正例。</li>
+<li>对于<code>x1_Pos</code>特征，将其设置为temp的值。</li>
+<li>对于<code>x2_Pos</code>特征，根据以下规则进行设置：</li>
+<li>如果当前数据点的索引i是偶数，则将<code>x2_Pos</code>设置为<code>sqrt(4.0 - temp^2) + 0.3 * 随机正态分布的随机数</code>。</li>
+<li>如果当前数据点的索引i是奇数，则将<code>x2_Pos</code>设置为<code>- sqrt(4.0 - temp^2) + 0.3 * 随机正态分布的随机数</code>。</li>
+</ul>
+<p>综合起来，这段代码生成了一个具有两个特征（x1_Pos和x2_Pos）和一个标签（y_Pos）的二分类数据集，其中x1_Pos和x2_Pos的取值与彼此相关，并且存在一定的噪声。</p>
+<div class="highlight"><pre><span></span><code><span class="n">x1_Neg</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">x2_Neg</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">y_Neg</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">1000</span><span class="p">):</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">-</span> <span class="mf">5.0</span>
+    <span class="n">y_Neg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">x1_Neg</span><span class="o">.</span> <span class="n">append</span> <span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">x2_Neg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">25.0</span> <span class="o">-</span> <span class="n">temp</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span> <span class="p">())</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x2_Neg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span> <span class="p">(</span><span class="mf">25.0</span> <span class="o">-</span> <span class="n">temp</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span> <span class="p">())</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x1_Pos</span><span class="p">,</span> <span class="n">x2_Pos</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Class 1&quot;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x1_Neg</span><span class="p">,</span> <span class="n">x2_Neg</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Class 0&quot;</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;xl&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;x2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span> <span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p><img alt="png" src="../output_7_0.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="n">Dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x1&quot;</span><span class="p">:</span> <span class="n">x1_Pos</span> <span class="o">+</span> <span class="n">x1_Neg</span><span class="p">,</span> <span class="s2">&quot;x2&quot;</span><span class="p">:</span> <span class="n">x2_Pos</span> <span class="o">+</span> <span class="n">x2_Neg</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_Pos</span> <span class="o">+</span> <span class="n">y_Neg</span><span class="p">}</span>
+<span class="n">DataTrain</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">Dict</span><span class="p">)</span>
+<span class="n">DataTrain</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x1</th>
+      <th>x2</th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.117529</td>
+      <td>1.440490</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-1.255701</td>
+      <td>-1.325910</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.950944</td>
+      <td>0.462942</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.744222</td>
+      <td>-1.889267</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.637758</td>
+      <td>1.741075</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1995</th>
+      <td>-4.094008</td>
+      <td>-3.365285</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1996</th>
+      <td>-4.273857</td>
+      <td>3.205604</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1997</th>
+      <td>1.081440</td>
+      <td>-4.366669</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1998</th>
+      <td>3.146540</td>
+      <td>4.072895</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1999</th>
+      <td>2.274089</td>
+      <td>-4.855089</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>2000 rows × 3 columns</p>
+</div>
+
+<div class="highlight"><pre><span></span><code><span class="n">x1_Pos</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">x2_Pos</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">y_Pos</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">250</span><span class="p">):</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">-</span> <span class="mf">2.0</span>
+    <span class="n">y_Pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">x1_Pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">x2_Pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">4.0</span> <span class="o">-</span> <span class="n">temp</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span> <span class="p">(</span> <span class="p">))</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x2_Pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">4.0</span> <span class="o">-</span> <span class="n">temp</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span> <span class="p">()</span> <span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">x1_Neg</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">x2_Neg</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">y_Neg</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">250</span><span class="p">):</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">-</span> <span class="mf">5.0</span>
+    <span class="n">y_Neg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">x1_Neg</span><span class="o">.</span> <span class="n">append</span> <span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">x2_Neg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">25.0</span> <span class="o">-</span> <span class="n">temp</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span> <span class="p">())</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">x2_Neg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span> <span class="p">(</span><span class="mf">25.0</span> <span class="o">-</span> <span class="n">temp</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span> <span class="p">())</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">Dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x1&quot;</span><span class="p">:</span> <span class="n">x1_Pos</span> <span class="o">+</span> <span class="n">x1_Neg</span><span class="p">,</span> <span class="s2">&quot;x2&quot;</span><span class="p">:</span> <span class="n">x2_Pos</span> <span class="o">+</span> <span class="n">x2_Neg</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="n">y_Pos</span> <span class="o">+</span> <span class="n">y_Neg</span><span class="p">}</span>
+<span class="n">DataTest</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">Dict</span><span class="p">)</span>
+<span class="n">DataTest</span>
+</code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x1</th>
+      <th>x2</th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.620214</td>
+      <td>1.175676</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.509711</td>
+      <td>-1.657162</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.471200</td>
+      <td>2.130239</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.906513</td>
+      <td>-1.790748</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-1.163231</td>
+      <td>1.673213</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>495</th>
+      <td>3.438152</td>
+      <td>-3.321079</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>496</th>
+      <td>-3.602392</td>
+      <td>3.356225</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>497</th>
+      <td>-3.557373</td>
+      <td>-3.948084</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>498</th>
+      <td>-0.313884</td>
+      <td>4.804572</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>499</th>
+      <td>4.260027</td>
+      <td>-2.314735</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>500 rows × 3 columns</p>
+</div>
+
+<h2 id="3-model-training">3. Model training<a class="headerlink" href="#3-model-training" title="Permanent link">&para;</a></h2>
+<div class="arithmatex">\[\vec{x}\in\mathbb{R}^{1\times 2}\]</div>
+<div class="arithmatex">\[W_1\in\mathbb{R}^{2\times 10}; b_1\in\mathbb{R}^{1\times 10}\]</div>
+<div class="arithmatex">\[W_2\in\mathbb{R}^{10\times 2}; b_2\in\mathbb{R}^{1\times 2}\]</div>
+<div class="arithmatex">\[z_1 = \sigma(\vec{x}W_1+b_1)\]</div>
+<div class="arithmatex">\[z_2 = \sigma(z_1W_2+b_2)\]</div>
+<div class="arithmatex">\[\hat{y} = {\rm{softmax}}(z_2)\]</div>
+<hr />
+<div class="arithmatex">\[Loss (W_1, W_2, b_1, b_2) = -\frac{1}{N}\sum_{i=1}^{N}[y_i\log\hat{y} +（1-y_1)\log(1-\hat{y})]\]</div>
+<hr />
+<div class="arithmatex">\[k = 0,1,2,...\]</div>
+<div class="arithmatex">\[W_1^{(k+1)} = W_1^{(k)} - \alpha_k\frac{\partial Loss(W_1^{(k)}, W_2^{(k)}, b_1^{(k)}, b_2^{(k})}{\partial
+W_1}\]</div>
+<div class="arithmatex">\[W_2^{(k+1)} = W_2^{(k)} - \alpha_k\frac{\partial Loss(W_1^{(k)}, W_2^{(k)}, b_1^{(k)}, b_2^{(k})}{\partial
+W_2}\]</div>
+<div class="arithmatex">\[b_1^{(k+1)} = b_1^{(k)} - \alpha_k\frac{\partial Loss(W_1^{(k)}, W_2^{(k)}, b_1^{(k)}, b_2^{(k})}{\partial
+b_1}\]</div>
+<div class="arithmatex">\[b_2^{(k+1)} = b_2^{(k)} - \alpha_k\frac{\partial Loss(W_1^{(k)}, W_2^{(k)}, b_1^{(k)}, b_2^{(k})}{\partial
+b_2}\]</div>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">DeepNeuralNetworkModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+
+    <span class="c1"># Constructor of the class</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dim1</span><span class="p">,</span> <span class="n">output_dim1</span><span class="p">,</span> <span class="n">input_dim2</span><span class="p">,</span> <span class="n">output_dim2</span><span class="p">):</span>   <span class="c1"># output_dim1 = input_dim2</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DeepNeuralNetworkModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># Fully Connected Layer 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">FC_layer1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">input_dim1</span><span class="p">,</span> <span class="n">output_dim1</span><span class="p">)</span>
+
+        <span class="c1"># nn.init.constant_(self.FC_layerl.weight, 0.1)</span>
+        <span class="c1"># nn.init.constant_(self.FC_layer1.bias, -0.1)</span>
+
+        <span class="c1"># Fully Connected Layer 2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">FC_layer2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">input_dim2</span><span class="p">,</span> <span class="n">output_dim2</span><span class="p">)</span>
+        <span class="c1"># nn.init.constant_(self.FC_layer2.weight, 0.1)</span>
+        <span class="c1"># nn.init.constant_(self.FC_layer2.bias, -0.1)</span>
+
+        <span class="c1"># Activation Function Sigmoid()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">act_sig</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()</span>
+
+    <span class="c1"># Forward propagation function</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>     <span class="c1"># dim of x: N*2</span>
+        <span class="n">z1_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FC_layer1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">z1</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_sig</span><span class="p">(</span><span class="n">z1_</span><span class="p">)</span>
+
+        <span class="n">z2_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FC_layer2</span><span class="p">(</span><span class="n">z1</span><span class="p">)</span>
+        <span class="n">z2</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">act_sig</span><span class="p">(</span><span class="n">z2_</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">z2</span>
+</code></pre></div>
+<p>这段代码定义了一个名为<code>DeepNeuralNetworkModel</code>的神经网络模型类。该类继承自<code>nn.Module</code>，是PyTorch中构建神经网络模型的基类。</p>
+<p>在该类中，包含以下几个主要部分：</p>
+<ol>
+<li>
+<p>构造函数<code>__init__</code>：初始化模型的参数和层结构。它接收输入维度和输出维度作为参数，并定义了两个全连接层（<code>self.FC_layer1</code>和<code>self.FC_layer2</code>），以及一个Sigmoid激活函数（<code>self.act_sig</code>）。</p>
+</li>
+<li>
+<p>前向传播函数<code>forward</code>：定义了数据在模型中前向传播的流程。输入数据x首先通过第一个全连接层（<code>self.FC_layer1</code>）进行线性变换，然后经过Sigmoid激活函数（<code>self.act_sig</code>）。接着，输出结果再通过第二个全连接层（<code>self.FC_layer2</code>）进行线性变换，最后再经过一次Sigmoid激活函数得到最终的输出结果。</p>
+</li>
+</ol>
+<p>该模型的结构是一个两层的全连接神经网络:</p>
+<ul>
+<li>第一层输入维度为<code>input_dim1</code>，第一层输出维度为<code>output_dim1</code></li>
+<li>第二层的输入维度为<code>output_dim1</code>（即第一层的输出维度），第二层的输出维度为<code>output_dim2</code>。</li>
+</ul>
+<p>整个模型的作用是将输入数据映射到一个输出结果，通过两个全连接层和激活函数的组合来实现非线性映射和特征提取。</p>
+<div class="highlight"><pre><span></span><code><span class="n">X_vec</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">DataTrain</span><span class="p">[[</span><span class="s2">&quot;x1&quot;</span><span class="p">,</span> <span class="s2">&quot;x2&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># N*2</span>
+<span class="n">y_vec</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">DataTrain</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># N*1</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">DNN_Model</span> <span class="o">=</span> <span class="n">DeepNeuralNetworkModel</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># 优化DNN model里的所有参数，lr:learning rate 学习率（动态变化）</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">DNN_Model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">)</span>
+<span class="c1"># 损失函数</span>
+<span class="n">loss_function</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">CrossEntropyLoss</span> <span class="p">()</span>
+
+<span class="c1"># Dynamically Change the learning rate</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">adjust_learning_rate</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>   <span class="c1"># epoch就可以理解为是一次迭代</span>
+    <span class="n">lr</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mf">0.00001</span> <span class="o">*</span> <span class="n">epoch</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">param_group</span> <span class="ow">in</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">param_groups</span><span class="p">:</span>
+        <span class="n">param_group</span><span class="p">[</span><span class="s1">&#39;lr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lr</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">Iter_times</span> <span class="o">=</span> <span class="mi">200000</span>
+<span class="n">loss_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Iter_times</span><span class="p">):</span>
+
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">DNN_Model</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X_vec</span><span class="p">)</span>  <span class="c1"># forward propagation</span>
+
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_function</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">y_vec</span><span class="p">))</span>  <span class="c1"># compute loss</span>
+
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span> <span class="c1"># backward propagation </span>
+
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span> <span class="c1"># update parameters</span>
+
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span> <span class="c1"># Reset grad to 0</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">500</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;iterations have been completed!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&gt; Now loss =&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=========================================&quot;</span><span class="p">)</span>
+
+    <span class="n">adjust_learning_rate</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="n">loss_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+    <span class="c1"># length = loss_list.__len__()</span>
+    <span class="c1"># if(torch.abs(loss_listrlength - 11 - loss_list rlength - 21)&lt;10** 1-15) and length &gt;=2):</span>
+        <span class="c1"># break</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>500 iterations have been completed!
+-&gt; Now loss = tensor(0.6814, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+1000 iterations have been completed!
+-&gt; Now loss = tensor(0.6406, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+1500 iterations have been completed!
+-&gt; Now loss = tensor(0.5620, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+2000 iterations have been completed!
+-&gt; Now loss = tensor(0.4912, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+2500 iterations have been completed!
+-&gt; Now loss = tensor(0.4461, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+3000 iterations have been completed!
+-&gt; Now loss = tensor(0.4169, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+3500 iterations have been completed!
+-&gt; Now loss = tensor(0.3933, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+4000 iterations have been completed!
+-&gt; Now loss = tensor(0.3756, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+4500 iterations have been completed!
+-&gt; Now loss = tensor(0.3634, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+5000 iterations have been completed!
+-&gt; Now loss = tensor(0.3549, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+5500 iterations have been completed!
+-&gt; Now loss = tensor(0.3486, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+6000 iterations have been completed!
+-&gt; Now loss = tensor(0.3439, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+6500 iterations have been completed!
+-&gt; Now loss = tensor(0.3403, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+7000 iterations have been completed!
+-&gt; Now loss = tensor(0.3374, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+7500 iterations have been completed!
+-&gt; Now loss = tensor(0.3350, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+8000 iterations have been completed!
+-&gt; Now loss = tensor(0.3331, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+8500 iterations have been completed!
+-&gt; Now loss = tensor(0.3314, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+9000 iterations have been completed!
+-&gt; Now loss = tensor(0.3300, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+9500 iterations have been completed!
+-&gt; Now loss = tensor(0.3289, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+10000 iterations have been completed!
+-&gt; Now loss = tensor(0.3278, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+10500 iterations have been completed!
+-&gt; Now loss = tensor(0.3269, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+11000 iterations have been completed!
+-&gt; Now loss = tensor(0.3261, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+11500 iterations have been completed!
+-&gt; Now loss = tensor(0.3254, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+12000 iterations have been completed!
+-&gt; Now loss = tensor(0.3248, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+12500 iterations have been completed!
+-&gt; Now loss = tensor(0.3242, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+13000 iterations have been completed!
+-&gt; Now loss = tensor(0.3237, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+13500 iterations have been completed!
+-&gt; Now loss = tensor(0.3232, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+14000 iterations have been completed!
+-&gt; Now loss = tensor(0.3228, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+14500 iterations have been completed!
+-&gt; Now loss = tensor(0.3224, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+15000 iterations have been completed!
+-&gt; Now loss = tensor(0.3220, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+15500 iterations have been completed!
+-&gt; Now loss = tensor(0.3217, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+16000 iterations have been completed!
+-&gt; Now loss = tensor(0.3214, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+16500 iterations have been completed!
+-&gt; Now loss = tensor(0.3211, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+17000 iterations have been completed!
+-&gt; Now loss = tensor(0.3208, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+17500 iterations have been completed!
+-&gt; Now loss = tensor(0.3206, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+18000 iterations have been completed!
+-&gt; Now loss = tensor(0.3204, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+18500 iterations have been completed!
+-&gt; Now loss = tensor(0.3202, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+19000 iterations have been completed!
+-&gt; Now loss = tensor(0.3200, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+19500 iterations have been completed!
+-&gt; Now loss = tensor(0.3198, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+20000 iterations have been completed!
+-&gt; Now loss = tensor(0.3196, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+20500 iterations have been completed!
+-&gt; Now loss = tensor(0.3194, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+21000 iterations have been completed!
+-&gt; Now loss = tensor(0.3193, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+21500 iterations have been completed!
+-&gt; Now loss = tensor(0.3191, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+22000 iterations have been completed!
+-&gt; Now loss = tensor(0.3190, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+22500 iterations have been completed!
+-&gt; Now loss = tensor(0.3188, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+23000 iterations have been completed!
+-&gt; Now loss = tensor(0.3187, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+23500 iterations have been completed!
+-&gt; Now loss = tensor(0.3186, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+24000 iterations have been completed!
+-&gt; Now loss = tensor(0.3185, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+24500 iterations have been completed!
+-&gt; Now loss = tensor(0.3184, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+25000 iterations have been completed!
+-&gt; Now loss = tensor(0.3182, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+25500 iterations have been completed!
+-&gt; Now loss = tensor(0.3181, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+26000 iterations have been completed!
+-&gt; Now loss = tensor(0.3180, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+26500 iterations have been completed!
+-&gt; Now loss = tensor(0.3180, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+27000 iterations have been completed!
+-&gt; Now loss = tensor(0.3179, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+27500 iterations have been completed!
+-&gt; Now loss = tensor(0.3178, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+28000 iterations have been completed!
+-&gt; Now loss = tensor(0.3177, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+28500 iterations have been completed!
+-&gt; Now loss = tensor(0.3176, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+29000 iterations have been completed!
+-&gt; Now loss = tensor(0.3175, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+29500 iterations have been completed!
+-&gt; Now loss = tensor(0.3175, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+30000 iterations have been completed!
+-&gt; Now loss = tensor(0.3174, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+30500 iterations have been completed!
+-&gt; Now loss = tensor(0.3173, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+31000 iterations have been completed!
+-&gt; Now loss = tensor(0.3173, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+31500 iterations have been completed!
+-&gt; Now loss = tensor(0.3172, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+32000 iterations have been completed!
+-&gt; Now loss = tensor(0.3171, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+32500 iterations have been completed!
+-&gt; Now loss = tensor(0.3171, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+33000 iterations have been completed!
+-&gt; Now loss = tensor(0.3170, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+33500 iterations have been completed!
+-&gt; Now loss = tensor(0.3170, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+34000 iterations have been completed!
+-&gt; Now loss = tensor(0.3169, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+34500 iterations have been completed!
+-&gt; Now loss = tensor(0.3169, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+35000 iterations have been completed!
+-&gt; Now loss = tensor(0.3168, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+35500 iterations have been completed!
+-&gt; Now loss = tensor(0.3168, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+36000 iterations have been completed!
+-&gt; Now loss = tensor(0.3167, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+36500 iterations have been completed!
+-&gt; Now loss = tensor(0.3167, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+37000 iterations have been completed!
+-&gt; Now loss = tensor(0.3166, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+37500 iterations have been completed!
+-&gt; Now loss = tensor(0.3166, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+38000 iterations have been completed!
+-&gt; Now loss = tensor(0.3165, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+38500 iterations have been completed!
+-&gt; Now loss = tensor(0.3165, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+39000 iterations have been completed!
+-&gt; Now loss = tensor(0.3165, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+39500 iterations have been completed!
+-&gt; Now loss = tensor(0.3164, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+40000 iterations have been completed!
+-&gt; Now loss = tensor(0.3164, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+40500 iterations have been completed!
+-&gt; Now loss = tensor(0.3164, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+41000 iterations have been completed!
+-&gt; Now loss = tensor(0.3163, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+41500 iterations have been completed!
+-&gt; Now loss = tensor(0.3163, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+42000 iterations have been completed!
+-&gt; Now loss = tensor(0.3163, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+42500 iterations have been completed!
+-&gt; Now loss = tensor(0.3162, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+43000 iterations have been completed!
+-&gt; Now loss = tensor(0.3162, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+43500 iterations have been completed!
+-&gt; Now loss = tensor(0.3162, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+44000 iterations have been completed!
+-&gt; Now loss = tensor(0.3161, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+44500 iterations have been completed!
+-&gt; Now loss = tensor(0.3161, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+45000 iterations have been completed!
+-&gt; Now loss = tensor(0.3161, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+45500 iterations have been completed!
+-&gt; Now loss = tensor(0.3160, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+46000 iterations have been completed!
+-&gt; Now loss = tensor(0.3160, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+46500 iterations have been completed!
+-&gt; Now loss = tensor(0.3160, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+47000 iterations have been completed!
+-&gt; Now loss = tensor(0.3160, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+47500 iterations have been completed!
+-&gt; Now loss = tensor(0.3159, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+48000 iterations have been completed!
+-&gt; Now loss = tensor(0.3159, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+48500 iterations have been completed!
+-&gt; Now loss = tensor(0.3159, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+49000 iterations have been completed!
+-&gt; Now loss = tensor(0.3159, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+49500 iterations have been completed!
+-&gt; Now loss = tensor(0.3158, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+50000 iterations have been completed!
+-&gt; Now loss = tensor(0.3158, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+50500 iterations have been completed!
+-&gt; Now loss = tensor(0.3158, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+51000 iterations have been completed!
+-&gt; Now loss = tensor(0.3158, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+51500 iterations have been completed!
+-&gt; Now loss = tensor(0.3157, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+52000 iterations have been completed!
+-&gt; Now loss = tensor(0.3157, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+52500 iterations have been completed!
+-&gt; Now loss = tensor(0.3157, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+53000 iterations have been completed!
+-&gt; Now loss = tensor(0.3157, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+53500 iterations have been completed!
+-&gt; Now loss = tensor(0.3157, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+54000 iterations have been completed!
+-&gt; Now loss = tensor(0.3156, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+54500 iterations have been completed!
+-&gt; Now loss = tensor(0.3156, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+55000 iterations have been completed!
+-&gt; Now loss = tensor(0.3156, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+55500 iterations have been completed!
+-&gt; Now loss = tensor(0.3156, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+56000 iterations have been completed!
+-&gt; Now loss = tensor(0.3156, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+56500 iterations have been completed!
+-&gt; Now loss = tensor(0.3156, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+57000 iterations have been completed!
+-&gt; Now loss = tensor(0.3155, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+57500 iterations have been completed!
+-&gt; Now loss = tensor(0.3155, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+58000 iterations have been completed!
+-&gt; Now loss = tensor(0.3155, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+58500 iterations have been completed!
+-&gt; Now loss = tensor(0.3155, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+59000 iterations have been completed!
+-&gt; Now loss = tensor(0.3155, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+59500 iterations have been completed!
+-&gt; Now loss = tensor(0.3155, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+60000 iterations have been completed!
+-&gt; Now loss = tensor(0.3154, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+60500 iterations have been completed!
+-&gt; Now loss = tensor(0.3154, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+61000 iterations have been completed!
+-&gt; Now loss = tensor(0.3154, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+61500 iterations have been completed!
+-&gt; Now loss = tensor(0.3154, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+62000 iterations have been completed!
+-&gt; Now loss = tensor(0.3154, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+62500 iterations have been completed!
+-&gt; Now loss = tensor(0.3154, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+63000 iterations have been completed!
+-&gt; Now loss = tensor(0.3153, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+63500 iterations have been completed!
+-&gt; Now loss = tensor(0.3153, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+64000 iterations have been completed!
+-&gt; Now loss = tensor(0.3153, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+64500 iterations have been completed!
+-&gt; Now loss = tensor(0.3153, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+65000 iterations have been completed!
+-&gt; Now loss = tensor(0.3153, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+65500 iterations have been completed!
+-&gt; Now loss = tensor(0.3153, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+66000 iterations have been completed!
+-&gt; Now loss = tensor(0.3153, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+66500 iterations have been completed!
+-&gt; Now loss = tensor(0.3153, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+67000 iterations have been completed!
+-&gt; Now loss = tensor(0.3152, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+67500 iterations have been completed!
+-&gt; Now loss = tensor(0.3152, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+68000 iterations have been completed!
+-&gt; Now loss = tensor(0.3152, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+68500 iterations have been completed!
+-&gt; Now loss = tensor(0.3152, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+69000 iterations have been completed!
+-&gt; Now loss = tensor(0.3152, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+69500 iterations have been completed!
+-&gt; Now loss = tensor(0.3152, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+70000 iterations have been completed!
+-&gt; Now loss = tensor(0.3152, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+70500 iterations have been completed!
+-&gt; Now loss = tensor(0.3152, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+71000 iterations have been completed!
+-&gt; Now loss = tensor(0.3151, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+71500 iterations have been completed!
+-&gt; Now loss = tensor(0.3151, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+72000 iterations have been completed!
+-&gt; Now loss = tensor(0.3151, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+72500 iterations have been completed!
+-&gt; Now loss = tensor(0.3151, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+73000 iterations have been completed!
+-&gt; Now loss = tensor(0.3151, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+73500 iterations have been completed!
+-&gt; Now loss = tensor(0.3151, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+74000 iterations have been completed!
+-&gt; Now loss = tensor(0.3151, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+74500 iterations have been completed!
+-&gt; Now loss = tensor(0.3151, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+75000 iterations have been completed!
+-&gt; Now loss = tensor(0.3151, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+75500 iterations have been completed!
+-&gt; Now loss = tensor(0.3151, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+76000 iterations have been completed!
+-&gt; Now loss = tensor(0.3150, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+76500 iterations have been completed!
+-&gt; Now loss = tensor(0.3150, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+77000 iterations have been completed!
+-&gt; Now loss = tensor(0.3150, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+77500 iterations have been completed!
+-&gt; Now loss = tensor(0.3150, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+78000 iterations have been completed!
+-&gt; Now loss = tensor(0.3150, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+78500 iterations have been completed!
+-&gt; Now loss = tensor(0.3150, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+79000 iterations have been completed!
+-&gt; Now loss = tensor(0.3150, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+79500 iterations have been completed!
+-&gt; Now loss = tensor(0.3150, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+80000 iterations have been completed!
+-&gt; Now loss = tensor(0.3150, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+80500 iterations have been completed!
+-&gt; Now loss = tensor(0.3150, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+81000 iterations have been completed!
+-&gt; Now loss = tensor(0.3150, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+81500 iterations have been completed!
+-&gt; Now loss = tensor(0.3149, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+82000 iterations have been completed!
+-&gt; Now loss = tensor(0.3149, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+82500 iterations have been completed!
+-&gt; Now loss = tensor(0.3149, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+83000 iterations have been completed!
+-&gt; Now loss = tensor(0.3149, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+83500 iterations have been completed!
+-&gt; Now loss = tensor(0.3149, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+84000 iterations have been completed!
+-&gt; Now loss = tensor(0.3149, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+84500 iterations have been completed!
+-&gt; Now loss = tensor(0.3149, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+85000 iterations have been completed!
+-&gt; Now loss = tensor(0.3149, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+85500 iterations have been completed!
+-&gt; Now loss = tensor(0.3149, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+86000 iterations have been completed!
+-&gt; Now loss = tensor(0.3149, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+86500 iterations have been completed!
+-&gt; Now loss = tensor(0.3149, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+87000 iterations have been completed!
+-&gt; Now loss = tensor(0.3149, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+87500 iterations have been completed!
+-&gt; Now loss = tensor(0.3149, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+88000 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+88500 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+89000 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+89500 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+90000 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+90500 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+91000 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+91500 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+92000 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+92500 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+93000 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+93500 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+94000 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+94500 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+95000 iterations have been completed!
+-&gt; Now loss = tensor(0.3148, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+95500 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+96000 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+96500 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+97000 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+97500 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+98000 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+98500 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+99000 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+99500 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+100000 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+100500 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+101000 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+101500 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+102000 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+102500 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+103000 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+103500 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+104000 iterations have been completed!
+-&gt; Now loss = tensor(0.3147, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+104500 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+105000 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+105500 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+106000 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+106500 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+107000 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+107500 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+108000 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+108500 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+109000 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+109500 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+110000 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+110500 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+111000 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+111500 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+112000 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+112500 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+113000 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+113500 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+114000 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+114500 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+115000 iterations have been completed!
+-&gt; Now loss = tensor(0.3146, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+115500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+116000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+116500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+117000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+117500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+118000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+118500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+119000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+119500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+120000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+120500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+121000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+121500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+122000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+122500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+123000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+123500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+124000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+124500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+125000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+125500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+126000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+126500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+127000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+127500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+128000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+128500 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+129000 iterations have been completed!
+-&gt; Now loss = tensor(0.3145, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+129500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+130000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+130500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+131000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+131500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+132000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+132500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+133000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+133500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+134000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+134500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+135000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+135500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+136000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+136500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+137000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+137500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+138000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+138500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+139000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+139500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+140000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+140500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+141000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+141500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+142000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+142500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+143000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+143500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+144000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+144500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+145000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+145500 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+146000 iterations have been completed!
+-&gt; Now loss = tensor(0.3144, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+146500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+147000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+147500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+148000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+148500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+149000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+149500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+150000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+150500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+151000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+151500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+152000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+152500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+153000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+153500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+154000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+154500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+155000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+155500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+156000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+156500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+157000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+157500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+158000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+158500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+159000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+159500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+160000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+160500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+161000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+161500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+162000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+162500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+163000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+163500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+164000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+164500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+165000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+165500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+166000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+166500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+167000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+167500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+168000 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+168500 iterations have been completed!
+-&gt; Now loss = tensor(0.3143, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+169000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+169500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+170000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+170500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+171000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+171500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+172000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+172500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+173000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+173500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+174000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+174500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+175000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+175500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+176000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+176500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+177000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+177500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+178000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+178500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+179000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+179500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+180000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+180500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+181000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+181500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+182000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+182500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+183000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+183500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+184000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+184500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+185000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+185500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+186000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+186500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+187000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+187500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+188000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+188500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+189000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+189500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+190000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+190500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+191000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+191500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+192000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+192500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+193000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+193500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+194000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+194500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+195000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+195500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+196000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+196500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+197000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+197500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+198000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+198500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+199000 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+199500 iterations have been completed!
+-&gt; Now loss = tensor(0.3142, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+200000 iterations have been completed!
+-&gt; Now loss = tensor(0.3141, grad_fn=&lt;NllLossBackward0&gt;)
+=========================================
+</code></pre></div>
+<h2 id="4-visualization-of-the-cross-entropy-loss-function">4. Visualization of the Cross Entropy Loss Function<a class="headerlink" href="#4-visualization-of-the-cross-entropy-loss-function" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">loss_list</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The length of loss_list is:&quot;</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20001</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">[</span><span class="n">loss</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span> <span class="k">for</span> <span class="n">loss</span> <span class="ow">in</span> <span class="n">loss_list</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">20000</span><span class="p">]],</span> <span class="s2">&quot;black&quot;</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;epoch&quot;</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;loss&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>The length of loss_list is: 200000
+</code></pre></div>
+<p><img alt="png" src="../output_20_1.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 开始测试</span>
+<span class="n">X_vec_test</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">DataTest</span><span class="p">[[</span><span class="s2">&quot;x1&quot;</span><span class="p">,</span><span class="s2">&quot;x2&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># N*2</span>
+<span class="n">y_vec_test</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">DataTest</span><span class="p">[</span><span class="s2">&quot;y&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># N*1</span>
+
+<span class="n">pred</span> <span class="o">=</span> <span class="n">DNN_Model</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">X_vec_test</span><span class="p">)</span>
+<span class="n">pred_vec</span> <span class="o">=</span> <span class="n">pred</span> <span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">pred_vec</span><span class="p">[</span><span class="n">pred_vec</span> <span class="o">&gt;</span> <span class="mf">0.50</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">pred_vec</span><span class="p">[</span><span class="n">pred_vec</span> <span class="o">&lt;=</span> <span class="mf">0.50</span> <span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">pred_vec</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>tensor([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+        1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
+        0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+       grad_fn=&lt;AsStridedBackward0&gt;)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">y_pred_np</span> <span class="o">=</span> <span class="n">y_vec_test</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span class="n">y_pred_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">y_pred_np</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shape of y_pred_p:&quot;</span><span class="p">,</span> <span class="n">y_pred_np</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">pred_vec_np</span> <span class="o">=</span> <span class="n">pred_vec</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+<span class="n">pred_vec_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span> <span class="n">squeeze</span> <span class="p">(</span><span class="n">pred_vec_np</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Shape of y_pred_p:&quot;</span><span class="p">,</span> <span class="n">pred_vec_np</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Shape of y_pred_p: (500,)
+Shape of y_pred_p: (500,)
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span> <span class="p">(</span><span class="n">y_vec_test</span><span class="p">,</span> <span class="n">y_pred_np</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;The accuracy score is:&quot;</span><span class="p">,</span> <span class="n">accuracy</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>The accuracy score is: 1.0
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Jingxuan Wang
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.indexes", "navigation.expand", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+        <script src="../../../../mkdocs/javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
